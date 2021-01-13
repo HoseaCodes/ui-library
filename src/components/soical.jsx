@@ -2,6 +2,7 @@ import React from 'react';
 import './components.scss'
 import { FiGithub, FiLinkedin, FiTwitter, FiSun, FiMoon, FiSearch } from "react-icons/fi";
 
+
 const Social = () => {
     return (
         <ul className="social">

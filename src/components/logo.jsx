@@ -1,11 +1,10 @@
 import React from 'react';
-import { FiActivity } from "react-icons/fi";
-
+import Logo1 from '../images/logo.png'
 const Logo = () => {
     return (
         <div className="logo-section">
-            <FiActivity />
-            <h1 className="logo">Logo</h1>
+            <img src={Logo1} alt="Logo" />
+            <h1 className="logo">UI Heat</h1>
         </div>
     )
 }
