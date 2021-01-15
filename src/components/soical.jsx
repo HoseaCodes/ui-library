@@ -1,31 +1,59 @@
 import React from 'react';
-import './components.scss'
+import './components.scss';
+import styled from 'styled-components';
 import { FiGithub, FiLinkedin, FiTwitter, FiSun, FiMoon, FiSearch } from "react-icons/fi";
 
+const Container = styled.ul`
+    background-color: ${props => props.theme.pageBackground};
+    transitionL all .5s ease;
+`;
+const Toggle = styled.i`
+    color: ${props => props.theme.textColor}
+    transitionL all .5s ease;
+    &:focus {
+        outline: none; 
+    }
+`;
 
-const Social = () => {
+const Linkitems = styled.li`
+    transitionL all .5s ease;
+    color: ${props => props.theme.textColor}
+`;
+
+
+const Social = (props) => {
+    function changeTheme() {
+        if (props.theme === "light") {
+            props.setTheme("dark");
+        } else {
+            props.setTheme("light");
+        }
+    };
+    const icon = props.theme === "light" ? <FiMoon /> : <FiSun />;
+
     return (
-        <ul className="social">
-            <li>
+        <Container className="social">
+            <Linkitems>
                 <FiSearch />
-            </li>
-            <li>
+            </Linkitems>
+            <Linkitems>
                 <FiGithub />
-            </li>
-            <li>
+            </Linkitems>
+            <Linkitems>
                 <FiLinkedin />
-            </li>
-            <li>
+            </Linkitems>
+            <Linkitems>
                 <FiTwitter />
-            </li>
-            <li>
-                <FiSun />
-            </li>
-            <li>
-                <FiMoon />
-            </li>
+            </Linkitems>
+            <Linkitems className="toggle">
+                <Toggle
+                    className="btn"
+                    onClick={changeTheme}>
+                    {icon}
+                </Toggle>
+            </Linkitems>
 
-        </ul>
+        </Container>
     )
 }
 
