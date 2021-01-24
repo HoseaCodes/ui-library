@@ -4,14 +4,15 @@ import styled from 'styled-components';
 
 const Title = styled.h1`
     transitionL all .5s ease;
-    color: ${props => props.theme.textColor}
+    color: ${props => props.theme.textColor};,
+    padding-left: 20px;
 `;
 
 const Logo = () => {
     return (
         <div className="logo-section">
-            <img src={Logo1} alt="Logo" />
-            <Title className="logo">UI Heat</Title>
+            <img className="logo" src={Logo1} alt="Logo" />
+            <Title className="logo-title">UI Heat</Title>
         </div>
     )
 }
