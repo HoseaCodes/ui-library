@@ -62,15 +62,7 @@ const SideBar = () => {
                             </li>
                             <li>
                                 <a href="#">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
                                     <p>Input</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
                                 </a>
                             </li>
                             <li>

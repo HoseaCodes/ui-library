@@ -32,8 +32,12 @@ const Nav = (props) => {
                         |
                 </Linkitems>
                     <Linkitems>
-                        Github
-            </Linkitems>
+                        <a href="https://github.com/HoseaCodes/ui-library"
+                            target="_blank"
+                        >
+                            Github
+                    </a>
+                    </Linkitems>
                     <Linkitems>
                         Docs
             </Linkitems>
