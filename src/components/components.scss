@@ -79,6 +79,9 @@ header {
          ul {
              display: flex;
              flex-direction: column;
+             h2:hover {
+                 cursor: pointer;
+             }
              li {
                  padding: 10px;
                  a {
