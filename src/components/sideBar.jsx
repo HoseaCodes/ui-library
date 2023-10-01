@@ -11,6 +11,7 @@ const SideBar = () => {
     const [isStarted, setStarted] = useState("false");
     const [isComponents, setComponents] = useState("false");
     const [isContent, setContent] = useState("false");
+    const [isAPI, setAPI] = useState("false");
     const [isCustom, setCustom] = useState("false");
     const [isStyle, setStyle] = useState("false");
     const [isHelper, setHelper] = useState("false");
@@ -103,7 +104,6 @@ const SideBar = () => {
                         </ul>
                     </ul>
                     <ul>
-
                         <Title >
                             <h2 onClick={() => setContent(!isContent)}> Content</h2>
                             <MdKeyboardArrowRight style={{ paddingLeft: "20px", fontSize: '2rem' }} />
@@ -122,6 +122,24 @@ const SideBar = () => {
                             </li>
                         </ul>
                     </ul>
+                    {/* <ul>
+                        <Title >
+                            <h2 onClick={() => setAPI(!isAPI)}> APIs</h2>
+                            <MdKeyboardArrowRight style={{ paddingLeft: "20px", fontSize: '2rem' }} />
+                        </Title >
+                        <ul className={isAPI ? "api" : null}>
+                            <li>
+                                <a href="#">
+                                    <p>Weather API</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <p>Images</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </ul> */}
                     <ul>
                         <Title >
                             <h2 onClick={() => setHelper(!isHelper)}> Helpers</h2>
