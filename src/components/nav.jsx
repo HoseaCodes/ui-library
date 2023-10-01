@@ -1,5 +1,5 @@
 import React from 'react';
-import './components.scss'
+import './components.css'
 import styled from 'styled-components';
 import Logo from './logo';
 import Social from './soical';
