@@ -10,8 +10,8 @@
 A beginner-friendly and stylish front-end framework for easier web development.
 
 **See Docs:**
-- storybook.uiheat.com
-- docs.uiheat.com
+- [Storybook](storybook.uiheat.com)
+- [Documentation](docs.uiheat.com)
 ## Table of Contents
 
 - [UI Heat](#ui-heat)
