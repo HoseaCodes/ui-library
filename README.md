@@ -1,5 +1,4 @@
-# UI-Library
-![UI-Heat](https://i.imgur.com/0UGKyoj.png)
+# Getting Started with Create React App
 
 ## Created by: Dominique Hosea
 
@@ -35,3 +34,4 @@ Dependencies used:
 
 - Light and Dark Mode across the entire application
 - Button Component with Documentation on how to implement 
+=======

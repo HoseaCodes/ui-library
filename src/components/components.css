@@ -1,0 +1,106 @@
+li {
+  list-style: none;
+}
+.social {
+  display: flex;
+}
+.social li {
+  font-size: 2.5rem;
+  padding: 0.5rem;
+}
+.social li i {
+  color: #708daa;
+}
+nav ul {
+  display: flex;
+}
+nav ul .line {
+  color: gray;
+  font-size: 2.5rem;
+  opacity: 0.5;
+}
+nav ul li {
+  color: black;
+  text-shadow: 0.2px 0.2px #f53537;
+  line-height: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 1.5rem;
+}
+nav ul li a {
+  color: black;
+  text-decoration: none;
+}
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #f0f2f2;
+  box-shadow: 2px 22px 25px rgba(0, 0, 0, 0.1);
+}
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+.logo-section .logo {
+  height: 200px;
+}
+.logo-section svg {
+  font-size: 2rem;
+}
+.sidebar {
+  height: 100vh;
+  min-height: 500px;
+  width: 25%;
+  position: absolute;
+  top: 20.2%;
+  left: 0;
+  background-color: white;
+  overflow: hidden;
+  transition: width 0.2s;
+}
+.sidebar nav {
+  padding-left: 50px;
+}
+.sidebar nav ul {
+  display: flex;
+  flex-direction: column;
+}
+.sidebar nav ul h2:hover {
+  cursor: pointer;
+}
+.sidebar nav ul li {
+  padding: 10px;
+}
+.sidebar nav ul li a {
+  color: black;
+  text-decoration: none;
+}
+.sidebar nav ul li:hover {
+  background-color: whitesmoke;
+}
+.sidebar nav ul .active {
+  display: none;
+}
+.sidebar nav ul .gettingStarted {
+  display: none;
+}
+.sidebar nav ul .components {
+  display: none;
+}
+.sidebar nav ul .content {
+  display: none;
+}
+.sidebar nav ul .helper {
+  display: none;
+}
+.sidebar nav ul .custom {
+  display: none;
+}
+.sidebar nav ul .guide {
+  display: none;
+}
+.sidebar nav ul .style {
+  display: none;
+}
