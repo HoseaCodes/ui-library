@@ -1,4 +1,4 @@
-# [UI Heat](www.uiheat.com)
+# [UI Heat](https://www.uiheat.com)
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/HoseaCodes/ui-library.git)
 ![GitHub](https://img.shields.io/github/license/HoseaCodes/ui-library.git)
