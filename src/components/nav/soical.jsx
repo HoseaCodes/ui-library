@@ -1,5 +1,5 @@
 import React from 'react';
-import './components.css';
+import './nav.css';
 import styled from 'styled-components';
 import { FiGithub, FiLinkedin, FiTwitter, FiSun, FiMoon, FiSearch } from "react-icons/fi";
 

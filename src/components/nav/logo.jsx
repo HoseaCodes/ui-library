@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo1 from '../images/logo.png'
+import Logo1 from '../../assets/logo.png'
 import styled from 'styled-components';
 
 const Title = styled.h1`

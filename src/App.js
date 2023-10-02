@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import './App.css';
-import Nav from './components/nav';
-import './components/components.css';
+import Nav from './components/nav/nav';
 import { ThemeProvider } from 'styled-components';
-import SideBar from './components/sideBar';
+import SideBar from './components/sidebar/sideBar';
 
 const LightTheme = {
   pageBackground: "white",

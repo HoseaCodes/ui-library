@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { MdKeyboardArrowRight, MdKeyboardArrowDown } from 'react-icons/md'
 import styled from 'styled-components';
+import './sideBar.css'
+
 
 const Title = styled.div`
     display: flex;
