@@ -36,11 +36,16 @@ const Nav = (props) => {
                             target="_blank"
                         >
                             Github
-                    </a>
+                        </a>
                     </Linkitems>
                     <Linkitems>
-                        Docs
-            </Linkitems>
+                        <a href="https://docs.uiheat.com"
+                            target="_blank"
+                        >
+                            Docs
+                        </a>
+                        
+                    </Linkitems>
                 </ul>
             </Navigation>
             <Social theme={theme} setTheme={setTheme} />
