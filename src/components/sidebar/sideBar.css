@@ -4,10 +4,10 @@
   min-height: 500px;
   width: 25%;
   position: absolute;
-  top: 20.2%;
+  top: 15%;
   left: 0;
   background-color: white;
-  overflow: hidden;
+  overflow: scroll;
   transition: width 0.2s;
 }
 .sidebar nav {

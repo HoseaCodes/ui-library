@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import './App.css';
-import Nav from './components/nav/nav';
 import { ThemeProvider } from 'styled-components';
-import SideBar from './components/sidebar/sideBar';
+import Layout from './Layout';
 
 const LightTheme = {
   pageBackground: "white",
@@ -31,8 +30,7 @@ function App() {
   const [theme, setTheme] = useState("light")
   return (
     <ThemeProvider theme={themes[theme]} className="App">
-      <Nav theme={theme} setTheme={setTheme} />
-      <SideBar />
+      <Layout theme={theme} setTheme={setTheme}/>
     </ThemeProvider>
   );
 }
