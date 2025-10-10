@@ -3,6 +3,7 @@ import './App.css';
 import './styles/utilities.css';
 import { ThemeProvider } from 'styled-components';
 import Layout from './Layout';
+import { VersionProvider } from './contexts/VersionContext';
 
 const LightTheme = {
   pageBackground: "#FFFFFF", // Background White
@@ -39,9 +40,11 @@ function App() {
   const [theme, setTheme] = useState("light");
   
   return (
-    <ThemeProvider theme={themes[theme]} className="App">
-      <Layout theme={theme} setTheme={setTheme} />
-    </ThemeProvider>
+    <VersionProvider>
+      <ThemeProvider theme={themes[theme]} className="App">
+        <Layout theme={theme} setTheme={setTheme} />
+      </ThemeProvider>
+    </VersionProvider>
   );
 }
 

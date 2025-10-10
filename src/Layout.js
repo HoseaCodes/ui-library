@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import Footer from './components/footer/footer';
 import ModernNav from './components/nav/ModernNav';
-import ModernSideBar from './components/sidebar/ModernSideBar';
+import VersionedSideBar from './components/nav/VersionedSideBar';
 import ModernUIDemo from './ModernUIDemo';
+import { VersioningDocumentation } from './pages/VersioningDocumentation';
+import { SidebarNavigationDocumentation } from './pages/SidebarNavigationDocumentation';
+import { IntroductionPage } from './pages/IntroductionPage';
+import { InstallationPage } from './pages/InstallationPage';
+import { ButtonsPage } from './pages/ButtonsPage';
+import { GridSystemPage } from './pages/GridSystemPage';
+import { VersionChangelog } from './pages/VersionChangelog';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -31,14 +38,47 @@ const ContentArea = styled.main`
 
 const Layout = ({ theme, setTheme }) => {
   const [demoView, setDemoView] = useState('showcase');
+  const [currentPage, setCurrentPage] = useState('demo'); // demo, versioning, sidebar-nav, introduction, installation, buttons, grid-system, changelog
+
+  const renderContent = () => {
+    switch (currentPage) {
+      case 'versioning':
+        return <VersioningDocumentation />;
+      case 'sidebar-nav':
+        return <SidebarNavigationDocumentation />;
+      case 'introduction':
+        return <IntroductionPage />;
+      case 'installation':
+        return <InstallationPage />;
+      case 'buttons':
+        return <ButtonsPage />;
+      case 'grid-system':
+        return <GridSystemPage />;
+      case 'changelog':
+        return <VersionChangelog theme={theme} />;
+      default:
+        return <ModernUIDemo currentView={demoView} theme={theme} />;
+    }
+  };
 
   return (
     <Container theme={{ pageBackground: theme === 'light' ? 'white' : '#282c36' }}>
-      <ModernNav theme={theme} setTheme={setTheme} />
+      <ModernNav 
+        theme={theme} 
+        setTheme={setTheme} 
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
       <MainContent>
-        <ModernSideBar theme={theme} currentView={demoView} setCurrentView={setDemoView} />
+        <VersionedSideBar 
+          theme={theme} 
+          currentView={demoView} 
+          setCurrentView={setDemoView}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
         <ContentArea theme={{ pageBackground: theme === 'light' ? 'white' : '#282c36' }}>
-          <ModernUIDemo currentView={demoView} theme={theme} />
+          {renderContent()}
           <Footer theme={theme} />
         </ContentArea>
       </MainContent>

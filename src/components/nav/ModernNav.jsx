@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Logo from './logo';
 import Social from './soical';
+import { useVersion } from '../../contexts/VersionContext';
 
 const Navigation = styled.nav`
     background-color: ${props => props.theme.pageBackground};
@@ -47,17 +48,33 @@ const NavList = styled.ul`
 const Linkitems = styled.li`
     transition: all .3s ease;
     color: ${props => props.theme.textColor};
+    cursor: pointer;
     
-    a {
+    a, button {
         color: ${props => props.theme.textColor};
         text-decoration: none;
         font-weight: 500;
         font-size: 0.9rem;
-        padding: 0.5rem 0;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.375rem;
         transition: all 0.2s ease;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        
+        ${props => props.active && `
+            color: ${props.theme.pageBackground === '#FFFFFF' ? '#E84545' : '#FF6B6B'};
+            background-color: ${props.theme.pageBackground === '#FFFFFF' 
+                ? 'rgba(232, 69, 69, 0.1)' 
+                : 'rgba(255, 107, 107, 0.1)'};
+        `}
         
         &:hover {
             color: ${props => props.theme.pageBackground === '#FFFFFF' ? '#E84545' : '#FF6B6B'};
+            background-color: ${props => props.theme.pageBackground === '#FFFFFF' 
+                ? 'rgba(232, 69, 69, 0.08)' 
+                : 'rgba(255, 107, 107, 0.08)'};
         }
     }
 `;
@@ -100,19 +117,29 @@ const SearchShortcut = styled.span`
     border: 1px solid ${props => props.theme.pageBackground === '#FFFFFF' ? '#d1d5db' : '#6b7280'};
 `;
 
-const VersionBadge = styled.span`
-    background-color: ${props => props.theme.pageBackground === '#FFFFFF' ? '#f3f4f6' : '#374151'};
-    color: ${props => props.theme.textColor};
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.375rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    border: 1px solid ${props => props.theme.pageBackground === '#FFFFFF' ? '#d1d5db' : '#4b5563'};
-`;
+const ModernNav = ({ onToggle, theme, setTheme, currentPage, setCurrentPage }) => {
+    const { versionData, switchVersion, UI_HEAT_VERSIONS } = useVersion();
 
-const ModernNav = (props) => {
-    const theme = props.theme;
-    const setTheme = props.setTheme;
+    const handleVersionChange = (e) => {
+        if (switchVersion) {
+            switchVersion(e.target.value);
+        }
+    };
+
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'stable': return '#10b981';
+            case 'enhanced': return '#3b82f6';
+            case 'beta': return '#f59e0b';
+            default: return '#6b7280';
+        }
+    };
+    
+    const handleNavClick = (page) => {
+        if (setCurrentPage) {
+            setCurrentPage(page);
+        }
+    };
     
     return (
         <Headergroup theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937'}}>
@@ -121,7 +148,7 @@ const ModernNav = (props) => {
                     <NavLeft>
                         <Logo theme={theme} setTheme={setTheme} />
                         <NavList>
-                            <Linkitems theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}>
+                             <Linkitems theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}>
                                 <a href="#docs">Docs</a>
                             </Linkitems>
                             <Linkitems theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}>
@@ -148,9 +175,44 @@ const ModernNav = (props) => {
                             </SearchShortcut>
                         </SearchContainer>
                         
-                        <VersionBadge theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}>
-                            v5.3
-                        </VersionBadge>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <select
+                                value={versionData?.majorMinor || '1.0'}
+                                onChange={handleVersionChange}
+                                style={{
+                                    padding: '0.5rem',
+                                    borderRadius: '0.375rem',
+                                    border: `1px solid ${theme === 'light' ? '#d1d5db' : '#4b5563'}`,
+                                    backgroundColor: theme === 'light' ? '#f9fafb' : '#374151',
+                                    color: theme === 'light' ? '#000000' : '#ffffff',
+                                    fontSize: '0.875rem',
+                                    cursor: 'pointer',
+                                    outline: 'none'
+                                }}
+                                aria-label="Select UI Heat version"
+                            >
+                                {UI_HEAT_VERSIONS && Object.entries(UI_HEAT_VERSIONS).map(([key, version]) => (
+                                    <option key={key} value={key}>
+                                        v{version.fullVersion}
+                                    </option>
+                                ))}
+                            </select>
+                            
+                            <span
+                                style={{
+                                    display: 'inline-block',
+                                    padding: '0.25rem 0.5rem',
+                                    backgroundColor: getStatusColor(versionData?.status || 'stable'),
+                                    color: 'white',
+                                    borderRadius: '0.25rem',
+                                    fontSize: '0.75rem',
+                                    fontWeight: '500'
+                                }}
+                                title={`Status: ${versionData?.status || 'stable'} | Released: ${versionData?.releaseDate || 'N/A'}`}
+                            >
+                                {versionData?.status || 'stable'}
+                            </span>
+                        </div>
                         
                         <Social theme={theme} setTheme={setTheme} />
                     </NavRight>
