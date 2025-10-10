@@ -204,6 +204,17 @@ const ModernSideBar = ({ theme, currentView, setCurrentView, currentPage, setCur
         }}>
           Modern Design System
         </p>
+        
+        {/* Back to Landing Page */}
+        <NavItem 
+          theme={themeProps}
+          active={currentPage === 'landing'}
+          onClick={() => setCurrentPage('landing')}
+          style={{ marginTop: '1rem', padding: '0.5rem 0', fontSize: '0.875rem' }}
+        >
+          <span style={{ marginRight: '0.5rem' }}>🏠</span>
+          Back to Home
+        </NavItem>
       </div>
       
       {/* Version-Specific Navigation */}

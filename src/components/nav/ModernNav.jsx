@@ -45,6 +45,26 @@ const NavList = styled.ul`
     list-style: none;
 `;
 
+const NavButton = styled.button`
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none;
+    padding: 0;
+    
+    &:hover {
+        color: ${props => props.theme.pageBackground === '#FFFFFF' ? '#E84545' : '#FF6B6B'};
+    }
+    
+    &:focus {
+        outline: 2px solid ${props => props.theme.pageBackground === '#FFFFFF' ? '#E84545' : '#FF6B6B'};
+        outline-offset: 2px;
+    }
+`;
+
 const Linkitems = styled.li`
     transition: all .3s ease;
     color: ${props => props.theme.textColor};
@@ -149,16 +169,19 @@ const ModernNav = ({ onToggle, theme, setTheme, currentPage, setCurrentPage }) =
                         <Logo theme={theme} setTheme={setTheme} />
                         <NavList>
                              <Linkitems theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}>
-                                <a href="#docs">Docs</a>
+                                <NavButton theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937'}} onClick={() => handleNavClick('landing')}>Home</NavButton>
+                            </Linkitems>
+                             <Linkitems theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}>
+                                <NavButton theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937'}} onClick={() => handleNavClick('demo')}>Demo</NavButton>
+                            </Linkitems>
+                            <Linkitems theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}>
+                                <NavButton theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937'}} onClick={() => handleNavClick('introduction')}>Docs</NavButton>
                             </Linkitems>
                             <Linkitems theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}>
                                 <a href="#examples">Examples</a>
                             </Linkitems>
                             <Linkitems theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}>
-                                <a href="#icons">Icons</a>
-                            </Linkitems>
-                            <Linkitems theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}>
-                                <a href="#blog">Blog</a>
+                                <a href="https://github.com/HoseaCodes/UI-Heat" target="_blank" rel="noopener noreferrer">GitHub</a>
                             </Linkitems>
                         </NavList>
                     </NavLeft>
