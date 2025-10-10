@@ -1,31 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Footer from './components/footer/footer';
-import Nav from './components/nav/nav';
-import SideBar from './components/sidebar/sideBar';
+import ModernNav from './components/nav/ModernNav';
+import ModernSideBar from './components/sidebar/ModernSideBar';
+import ModernUIDemo from './ModernUIDemo';
 import styled from 'styled-components';
 
 const Container = styled.div`
     display: flex;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     flex-direction: column;
     z-index: 99;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden;
+    background-color: ${props => props.theme.pageBackground};
+    transition: background-color 0.3s ease;
 `;
 
-const Layout = ({ theme, setTheme, children }) => {
+const MainContent = styled.div`
+    display: flex;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+`;
+
+const ContentArea = styled.main`
+    flex: 1;
+    background-color: ${props => props.theme.pageBackground};
+    transition: background-color 0.3s ease;
+    min-height: 100vh;
+`;
+
+const Layout = ({ theme, setTheme }) => {
+  const [demoView, setDemoView] = useState('showcase');
 
   return (
-    <Container>
-      <Nav theme={theme} setTheme={setTheme}  />
-      <main>
-        <SideBar />
-        main
-        {children}
-      </main>
-      <Footer/>
+    <Container theme={{ pageBackground: theme === 'light' ? 'white' : '#282c36' }}>
+      <ModernNav theme={theme} setTheme={setTheme} />
+      <MainContent>
+        <ModernSideBar theme={theme} currentView={demoView} setCurrentView={setDemoView} />
+        <ContentArea theme={{ pageBackground: theme === 'light' ? 'white' : '#282c36' }}>
+          <ModernUIDemo currentView={demoView} theme={theme} />
+          <Footer theme={theme} />
+        </ContentArea>
+      </MainContent>
     </Container>
   );
 };
