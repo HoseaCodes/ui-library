@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { MdKeyboardArrowRight } from 'react-icons/md';
+import { useVersion } from '../../contexts/VersionContext';
+import { getNavigationForVersion } from '../../data/navigationStructure';
+import { VersionSwitcher } from '../version/VersionSwitcher';
 
 const SidebarContainer = styled.div`
   width: 280px;
@@ -107,11 +110,17 @@ const Badge = styled.span`
 `;
 
 const ModernSideBar = ({ theme, currentView, setCurrentView }) => {
+  const { currentVersion, getVersionUrl } = useVersion();
+  const navigation = getNavigationForVersion(currentVersion);
   const [expandedSections, setExpandedSections] = useState({
-    designSystem: true,
-    components: false,
-    examples: true, // Open examples by default to show the demo options
-    documentation: false
+    'Getting Started': true,
+    'Components': false,
+    'Layout': false,
+    'Utilities': false,
+    'Accessibility': false,
+    'Customization': false,
+    'Examples': true,
+    'Architecture': false
   });
 
   const [activeItem, setActiveItem] = useState(currentView || 'showcase');
@@ -123,11 +132,18 @@ const ModernSideBar = ({ theme, currentView, setCurrentView }) => {
     }));
   };
 
-  const handleItemClick = (item) => {
+  const handleItemClick = (item, path) => {
     setActiveItem(item);
     // If it's a demo view, update the current view
     if (['showcase', 'dashboard', 'login'].includes(item) && setCurrentView) {
       setCurrentView(item);
+    }
+    
+    // For actual documentation navigation, we'd navigate to the versioned URL
+    if (path && !['showcase', 'dashboard', 'login'].includes(item)) {
+      const versionedUrl = getVersionUrl(path);
+      console.log('Navigating to:', versionedUrl);
+      // In a real app, you'd use React Router here: navigate(versionedUrl);
     }
   };
 
@@ -139,10 +155,10 @@ const ModernSideBar = ({ theme, currentView, setCurrentView }) => {
 
   return (
     <SidebarContainer theme={themeProps}>
-      {/* Header */}
+      {/* Header with Version Switcher */}
       <div style={{ padding: '0 1.5rem 1.5rem 1.5rem', borderBottom: `1px solid ${theme === 'light' ? '#e2e8f0' : '#475569'}` }}>
         <h2 style={{ 
-          margin: 0, 
+          margin: '0 0 0.5rem 0', 
           color: themeProps.titleColor,
           fontSize: '1.25rem',
           fontWeight: '700'
@@ -150,51 +166,95 @@ const ModernSideBar = ({ theme, currentView, setCurrentView }) => {
           UI Heat
         </h2>
         <p style={{ 
-          margin: '0.25rem 0 0 0', 
+          margin: '0 0 1rem 0', 
           color: theme === 'light' ? '#64748b' : '#94a3b8',
           fontSize: '0.875rem'
         }}>
           Modern Design System
         </p>
+        <VersionSwitcher />
       </div>
       
-      
-      {/* Documentation Section */}
+      {/* Version-Specific Navigation */}
+      {navigation.sections.map((section) => (
+        <SidebarSection key={section.title}>
+          <SectionTitle theme={themeProps}>{section.title}</SectionTitle>
+          
+          <NavItem 
+            theme={themeProps}
+            onClick={() => toggleSection(section.title)}
+          >
+            <span>{section.title}</span>
+            <ArrowIcon isOpen={expandedSections[section.title]} />
+          </NavItem>
+
+          <SubNavContainer isOpen={expandedSections[section.title]}>
+            {section.items.map((item) => (
+              <SubNavItem 
+                key={item.title}
+                theme={themeProps}
+                active={activeItem === item.title.toLowerCase().replace(/\s+/g, '-')}
+                onClick={() => handleItemClick(item.title.toLowerCase().replace(/\s+/g, '-'), item.path)}
+              >
+                <span style={{ marginRight: '0.5rem' }}>{item.icon}</span>
+                {item.title}
+              </SubNavItem>
+            ))}
+          </SubNavContainer>
+        </SidebarSection>
+      ))}
+
+      </SubNavContainer>
+        </SidebarSection>
+      ))}
+
+      {/* Demo Examples Section (for current UI showcase) */}
       <SidebarSection>
-        <SectionTitle style={{ paddingTop: '1rem' }} theme={themeProps}>Documentation</SectionTitle>
+        <SectionTitle theme={themeProps}>Live Demos</SectionTitle>
         
         <NavItem 
           theme={themeProps}
-          onClick={() => toggleSection('documentation')}
+          onClick={() => toggleSection('demos')}
         >
-          <span>Getting Started</span>
-          <ArrowIcon isOpen={expandedSections.documentation} />
+          <span>Interactive Demos</span>
+          <ArrowIcon isOpen={expandedSections.demos} />
         </NavItem>
 
-        <SubNavContainer isOpen={expandedSections.documentation}>
+        <SubNavContainer isOpen={expandedSections.demos}>
           <SubNavItem 
             theme={themeProps}
-            active={activeItem === 'installation'}
-            onClick={() => handleItemClick('installation')}
+            active={activeItem === 'showcase'}
+            onClick={() => handleItemClick('showcase')}
           >
-            Installation
+            <span style={{ marginRight: '0.5rem' }}>🎨</span>
+            Component Showcase
           </SubNavItem>
           <SubNavItem 
             theme={themeProps}
-            active={activeItem === 'quickstart'}
-            onClick={() => handleItemClick('quickstart')}
+            active={activeItem === 'dashboard'}
+            onClick={() => handleItemClick('dashboard')}
           >
-            Quick Start Guide
+            <span style={{ marginRight: '0.5rem' }}>📊</span>
+            Dashboard Demo
           </SubNavItem>
           <SubNavItem 
             theme={themeProps}
-            active={activeItem === 'customization'}
-            onClick={() => handleItemClick('customization')}
+            active={activeItem === 'login'}
+            onClick={() => handleItemClick('login')}
           >
-            Customization
+            <span style={{ marginRight: '0.5rem' }}>🔐</span>
+            Login Form Demo
           </SubNavItem>
-          <SubNavItem 
-            theme={themeProps}
+        </SubNavContainer>
+      </SidebarSection>
+    </SidebarContainer>
+  );
+};
+
+export default ModernSideBar;
+    </SidebarContainer>
+  );
+};
             active={activeItem === 'theming'}
             onClick={() => handleItemClick('theming')}
           >
