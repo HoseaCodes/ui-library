@@ -2,18 +2,34 @@ import React from 'react';
 import Logo1 from '../../assets/logo.png'
 import styled from 'styled-components';
 
-const Title = styled.h1`
-    transitionL all .5s ease;
-    color: ${props => props.theme.textColor};,
-    padding-left: 20px;
+const LogoContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 `;
 
-const Logo = () => {
+const LogoImage = styled.img`
+    height: 2rem;
+    width: auto;
+    transition: all 0.3s ease;
+`;
+
+const Title = styled.h1`
+    transition: all 0.5s ease;
+    color: ${props => props.theme.textColor};
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    width: max-content;
+`;
+
+const Logo = ({ theme }) => {
     return (
-        <div className="logo-section">
-            <img className="logo" src={Logo1} alt="Logo" />
-            <Title className="logo-title">UI Heat</Title>
-        </div>
+        <LogoContainer>
+            <LogoImage src={Logo1} alt="UI Heat Logo" />
+            <Title theme={{textColor: theme === 'light' ? '#000000' : '#ffffff'}}>UI Heat</Title>
+        </LogoContainer>
     )
 }
 

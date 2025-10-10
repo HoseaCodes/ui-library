@@ -52,10 +52,6 @@ nav ul li a {
     align-items: center;
 }
 
-.logo-section .logo {
-    height: 8rem;
-}
-
 .logo-section svg {
     font-size: 2rem;
 }
