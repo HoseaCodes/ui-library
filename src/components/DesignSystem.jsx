@@ -59,6 +59,9 @@ const Button = styled.button`
   cursor: pointer;
   font-family: inherit;
   
+  /* Minimum touch target size for mobile */
+  min-height: 44px;
+  
   /* Sizes */
   ${props => {
     switch (props.size) {
@@ -67,6 +70,17 @@ const Button = styled.button`
       default: return 'padding: 0.625rem 1rem; font-size: 0.875rem;';
     }
   }}
+
+  /* Mobile touch optimization */
+  @media (max-width: 768px) {
+    padding: ${props => {
+      switch (props.size) {
+        case 'sm': return '0.625rem 0.875rem';
+        case 'lg': return '0.875rem 1.75rem';
+        default: return '0.75rem 1.25rem';
+      }
+    }};
+  }
 
   /* Variants */
   ${props => {
@@ -156,6 +170,14 @@ const Input = styled.input`
   color: var(--text-primary);
   transition: all 0.2s ease;
   font-size: 0.875rem;
+  
+  /* Mobile optimization for better touch targets */
+  min-height: 44px;
+  
+  @media (max-width: 768px) {
+    padding: 0.75rem 0.875rem;
+    font-size: 1rem; /* Prevents zoom on iOS */
+  }
 
   &:focus {
     outline: 2px solid var(--focus);
@@ -189,6 +211,11 @@ const Container = styled.div`
   padding-left: 1rem;
   padding-right: 1rem;
 
+  @media (max-width: 480px) {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
   @media (min-width: 640px) {
     max-width: 640px;
   }
@@ -216,6 +243,10 @@ const Grid = styled.div`
     return `grid-template-columns: repeat(${cols}, minmax(0, 1fr));`;
   }}
 
+  @media (max-width: 480px) {
+    gap: 0.75rem;
+  }
+
   @media (min-width: 640px) {
     ${props => props.smCols && `grid-template-columns: repeat(${props.smCols}, minmax(0, 1fr));`}
   }
@@ -237,13 +268,34 @@ const Heading = styled.h1`
   
   ${props => {
     switch (props.level) {
-      case 1: return 'font-size: 2.25rem; line-height: 2.5rem;';
-      case 2: return 'font-size: 1.875rem; line-height: 2.25rem;';
-      case 3: return 'font-size: 1.5rem; line-height: 2rem;';
-      case 4: return 'font-size: 1.25rem; line-height: 1.75rem;';
-      case 5: return 'font-size: 1.125rem; line-height: 1.75rem;';
-      case 6: return 'font-size: 1rem; line-height: 1.5rem;';
-      default: return 'font-size: 2.25rem; line-height: 2.5rem;';
+      case 1: return `
+        font-size: clamp(1.875rem, 4vw, 2.25rem); 
+        line-height: 1.2;
+      `;
+      case 2: return `
+        font-size: clamp(1.5rem, 3.5vw, 1.875rem); 
+        line-height: 1.25;
+      `;
+      case 3: return `
+        font-size: clamp(1.25rem, 3vw, 1.5rem); 
+        line-height: 1.3;
+      `;
+      case 4: return `
+        font-size: clamp(1.125rem, 2.5vw, 1.25rem); 
+        line-height: 1.35;
+      `;
+      case 5: return `
+        font-size: clamp(1rem, 2vw, 1.125rem); 
+        line-height: 1.4;
+      `;
+      case 6: return `
+        font-size: clamp(0.875rem, 1.5vw, 1rem); 
+        line-height: 1.45;
+      `;
+      default: return `
+        font-size: clamp(1.875rem, 4vw, 2.25rem); 
+        line-height: 1.2;
+      `;
     }
   }}
 `;
@@ -279,6 +331,7 @@ const NavContainer = styled.div`
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1rem;
+  position: relative;
 `;
 
 const Logo = styled.div`
@@ -293,6 +346,38 @@ const NavLinks = styled.div`
   align-items: center;
 
   @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const MobileMenuButton = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
+const MobileMenu = styled.div`
+  display: ${props => props.isOpen ? 'flex' : 'none'};
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--surface-raised);
+  border-top: 1px solid var(--border);
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+  z-index: 1000;
+
+  @media (min-width: 769px) {
     display: none;
   }
 `;
@@ -326,5 +411,7 @@ export {
   NavContainer,
   Logo,
   NavLinks,
-  NavLink
+  NavLink,
+  MobileMenuButton,
+  MobileMenu
 };

@@ -16,14 +16,67 @@ const SidebarContainer = styled.div`
   flex-shrink: 0;
   transition: all 0.3s ease;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     width: 260px;
+  }
+
+  @media (max-width: 768px) {
+    position: fixed;
+    left: ${props => props.isOpen ? '0' : '-280px'};
+    z-index: 1000;
+    width: 280px;
+    background-color: ${props => props.theme.pageBackground === '#FFFFFF' ? '#ffffff' : '#1e293b'};
+    box-shadow: ${props => props.isOpen ? '2px 0 8px rgba(0, 0, 0, 0.15)' : 'none'};
+  }
+
+  @media (max-width: 480px) {
+    width: 100vw;
+    left: ${props => props.isOpen ? '0' : '-100vw'};
   }
 `;
 
 const SidebarSection = styled.div`
   margin-bottom: 1rem;
-  `;
+`;
+
+const MobileOverlay = styled.div`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: ${props => props.isOpen ? 'block' : 'none'};
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+`;
+
+const MobileMenuToggle = styled.button`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: block;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1001;
+    background: ${props => props.theme.pageBackground === '#FFFFFF' ? '#ffffff' : '#1e293b'};
+    border: 1px solid ${props => props.theme.pageBackground === '#FFFFFF' ? '#e2e8f0' : '#475569'};
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: ${props => props.theme.textColor};
+    font-size: 1.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    &:hover {
+      background-color: ${props => props.theme.pageBackground === '#FFFFFF' ? '#f8fafc' : '#374151'};
+    }
+  }
+`;
   
   const SectionTitle = styled.h3`
   padding-top: 1.5rem;
@@ -59,6 +112,17 @@ const NavItem = styled.div`
     color: ${props.theme.titleColor};
     border-right: 3px solid ${props.theme.titleColor};
   `}
+  
+  @media (max-width: 768px) {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    
+    &:active {
+      background-color: ${props => props.theme.pageBackground === '#FFFFFF' 
+        ? 'rgba(232, 69, 69, 0.15)' 
+        : 'rgba(255, 107, 107, 0.15)'};
+    }
+  }
 `;
 
 const SubNavContainer = styled.div`
@@ -91,6 +155,17 @@ const SubNavItem = styled.div`
     color: ${props.theme.titleColor};
     font-weight: 600;
   `}
+  
+  @media (max-width: 768px) {
+    padding: 0.75rem 2rem;
+    font-size: 0.9rem;
+    
+    &:active {
+      background-color: ${props => props.theme.pageBackground === '#FFFFFF' 
+        ? 'rgba(232, 69, 69, 0.12)' 
+        : 'rgba(255, 107, 107, 0.12)'};
+    }
+  }
 `;
 
 const ArrowIcon = styled(MdKeyboardArrowRight)`
@@ -103,6 +178,7 @@ const ArrowIcon = styled(MdKeyboardArrowRight)`
 const ModernSideBar = ({ theme, currentView, setCurrentView, currentPage, setCurrentPage }) => {
   const { currentVersion, getVersionUrl } = useVersion();
   const navigation = getNavigationForVersion(currentVersion);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expandedSections, setExpandedSections] = useState({
     'Getting Started': true,
     'Components': false,
@@ -127,6 +203,7 @@ const ModernSideBar = ({ theme, currentView, setCurrentView, currentPage, setCur
 
   const handleItemClick = (item, path) => {
     setActiveItem(item);
+    setMobileMenuOpen(false); // Close mobile menu when item is clicked
     
     // Handle special documentation pages
     if (item === 'versioning-docs') {
@@ -185,8 +262,30 @@ const ModernSideBar = ({ theme, currentView, setCurrentView, currentPage, setCur
     titleColor: theme === 'light' ? '#E84545' : '#FF6B6B'
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
-    <SidebarContainer theme={themeProps}>
+    <>
+      {/* Mobile Menu Toggle */}
+      <MobileMenuToggle 
+        theme={themeProps}
+        onClick={toggleMobileMenu}
+      >
+        {mobileMenuOpen ? '✕' : '☰'}
+      </MobileMenuToggle>
+
+      {/* Mobile Overlay */}
+      <MobileOverlay 
+        isOpen={mobileMenuOpen}
+        onClick={() => setMobileMenuOpen(false)}
+      />
+
+      <SidebarContainer 
+        theme={themeProps}
+        isOpen={mobileMenuOpen}
+      >
       {/* Header with Version Switcher */}
       <div style={{ padding: '0 1.5rem 1.5rem 1.5rem', borderBottom: `1px solid ${theme === 'light' ? '#e2e8f0' : '#475569'}` }}>
         <h2 style={{ 
@@ -204,6 +303,17 @@ const ModernSideBar = ({ theme, currentView, setCurrentView, currentPage, setCur
         }}>
           Modern Design System
         </p>
+        
+        {/* Back to Landing Page */}
+        <NavItem 
+          theme={themeProps}
+          active={currentPage === 'landing'}
+          onClick={() => setCurrentPage('landing')}
+          style={{ marginTop: '1rem', padding: '0.5rem 0', fontSize: '0.875rem' }}
+        >
+          <span style={{ marginRight: '0.5rem' }}>🏠</span>
+          Back to Home
+        </NavItem>
       </div>
       
       {/* Version-Specific Navigation */}
@@ -307,6 +417,7 @@ const ModernSideBar = ({ theme, currentView, setCurrentView, currentPage, setCur
         </SubNavContainer>
       </SidebarSection>
     </SidebarContainer>
+    </>
   );
 };
 

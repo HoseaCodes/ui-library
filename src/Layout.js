@@ -10,6 +10,7 @@ import { InstallationPage } from './pages/InstallationPage';
 import { ButtonsPage } from './pages/ButtonsPage';
 import { GridSystemPage } from './pages/GridSystemPage';
 import { VersionChangelog } from './pages/VersionChangelog';
+import MainLandingPage from './components/landing/MainLandingPage';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -27,6 +28,10 @@ const MainContent = styled.div`
     width: 100%;
     flex: 1;
     min-height: 0;
+    
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
 `;
 
 const ContentArea = styled.main`
@@ -34,14 +39,21 @@ const ContentArea = styled.main`
     background-color: ${props => props.theme.pageBackground};
     transition: background-color 0.3s ease;
     min-height: 100vh;
+    
+    @media (max-width: 768px) {
+        padding-left: 0;
+        width: 100%;
+    }
 `;
 
 const Layout = ({ theme, setTheme }) => {
   const [demoView, setDemoView] = useState('showcase');
-  const [currentPage, setCurrentPage] = useState('demo'); // demo, versioning, sidebar-nav, introduction, installation, buttons, grid-system, changelog
+  const [currentPage, setCurrentPage] = useState('landing'); // landing, demo, versioning, sidebar-nav, introduction, installation, buttons, grid-system, changelog
 
   const renderContent = () => {
     switch (currentPage) {
+      case 'landing':
+        return <MainLandingPage setCurrentPage={setCurrentPage} />;
       case 'versioning':
         return <VersioningDocumentation />;
       case 'sidebar-nav':
@@ -63,25 +75,33 @@ const Layout = ({ theme, setTheme }) => {
 
   return (
     <Container theme={{ pageBackground: theme === 'light' ? 'white' : '#282c36' }}>
-      <ModernNav 
-        theme={theme} 
-        setTheme={setTheme} 
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
-      <MainContent>
-        <VersionedSideBar 
+      {currentPage !== 'landing' && (
+        <ModernNav 
           theme={theme} 
-          currentView={demoView} 
-          setCurrentView={setDemoView}
+          setTheme={setTheme} 
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
         />
+      )}
+      {currentPage === 'landing' ? (
         <ContentArea theme={{ pageBackground: theme === 'light' ? 'white' : '#282c36' }}>
           {renderContent()}
-          <Footer theme={theme} />
         </ContentArea>
-      </MainContent>
+      ) : (
+        <MainContent>
+          <VersionedSideBar 
+            theme={theme} 
+            currentView={demoView} 
+            setCurrentView={setDemoView}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+          <ContentArea theme={{ pageBackground: theme === 'light' ? 'white' : '#282c36' }}>
+            {renderContent()}
+            <Footer theme={theme} />
+          </ContentArea>
+        </MainContent>
+      )}
     </Container>
   );
 };

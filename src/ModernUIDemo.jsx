@@ -56,7 +56,9 @@ function ModernUIDemo({ currentView: propCurrentView, theme: propTheme }) {
       <div style={{ 
         backgroundColor: themes[theme].pageBackground,
         flex: 1,
-        paddingBottom: '2rem'
+        paddingBottom: '2rem',
+        width: '100%',
+        overflow: 'hidden'
       }}>
         {renderCurrentView()}
       </div>
