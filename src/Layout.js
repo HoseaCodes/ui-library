@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Footer from './components/footer/footer';
 import ModernNav from './components/nav/ModernNav';
-import VersionedSideBar from './components/sidebar/VersionedSideBar';
+import VersionedSideBar from './components/nav/VersionedSideBar';
 import ModernUIDemo from './ModernUIDemo';
 import { VersioningDocumentation } from './pages/VersioningDocumentation';
 import { SidebarNavigationDocumentation } from './pages/SidebarNavigationDocumentation';

@@ -22,10 +22,11 @@ const SidebarContainer = styled.div`
 `;
 
 const SidebarSection = styled.div`
-  margin-bottom: 1.5rem;
-`;
-
-const SectionTitle = styled.h3`
+  margin-bottom: 1rem;
+  `;
+  
+  const SectionTitle = styled.h3`
+  padding-top: 1.5rem;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
