@@ -35,45 +35,71 @@ const pulse = keyframes`
 
 // Styled Components
 const GettingStartedContainer = styled.section`
-  background: #262626; /* Using your dark theme surface */
-  padding: 8rem 2rem;
-  color: white; /* Using your dark theme text color */
+  background: #262626;
+  padding: 6rem 2rem;
+  color: white;
+  
+  @media (max-width: 768px) {
+    padding: 4rem 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 3rem 0.5rem;
+  }
 `;
 
 const SectionHeader = styled.div`
   text-align: center;
   margin-bottom: 6rem;
   animation: ${fadeInUp} 0.8s ease-out;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 4rem;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 3rem;
+  }
 `;
 
 const SectionTitle = styled.h2`
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
   margin: 0 0 1rem 0;
-  background: linear-gradient(135deg, #FFFFFF 0%, #FF6B6B 100%); /* Using your light-coral */
+  background: linear-gradient(135deg, #FFFFFF 0%, #FF6B6B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 `;
 
 const SectionSubtitle = styled.p`
-  font-size: 1.25rem;
-  color: #d1d5db; /* Using your dark theme text-secondary */
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: #d1d5db;
   max-width: 600px;
   margin: 0 auto 2rem auto;
   line-height: 1.6;
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
 `;
 
 const TimeCommitment = styled.div`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 107, 107, 0.1); /* Using your light-coral with transparency */
-  color: #FF6B6B; /* Using your light-coral */
+  background: rgba(255, 107, 107, 0.1);
+  color: #FF6B6B;
   padding: 0.75rem 1.5rem;
   border-radius: 25px;
   font-size: 1rem;
   font-weight: 600;
+  
+  @media (max-width: 640px) {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
 `;
 
 const StepsContainer = styled.div`
@@ -87,11 +113,15 @@ const StepsContainer = styled.div`
     grid-template-columns: 1fr;
     gap: 2rem;
   }
+  
+  @media (max-width: 480px) {
+    gap: 1.5rem;
+  }
 `;
 
 const StepCard = styled.div`
-  background: #404040; /* Using your dark theme surface-raised */
-  border: 1px solid #525252; /* Using your dark theme border */
+  background: #404040;
+  border: 1px solid #525252;
   border-radius: 16px;
   padding: 2rem;
   position: relative;
@@ -100,8 +130,17 @@ const StepCard = styled.div`
   
   &:hover {
     transform: translateY(-5px);
-    border-color: #FF6B6B; /* Using your light-coral */
+    border-color: #FF6B6B;
     box-shadow: 0 12px 30px rgba(255, 107, 107, 0.1);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1.25rem;
   }
 `;
 

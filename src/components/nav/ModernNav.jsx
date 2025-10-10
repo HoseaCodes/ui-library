@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Logo from './logo';
 import Social from './soical';
@@ -9,6 +9,10 @@ const Navigation = styled.nav`
     transition: all .5s ease;
     padding: 0.75rem 1.5rem;
     border-bottom: 1px solid ${props => props.theme.pageBackground === '#FFFFFF' ? '#e5e7eb' : '#374151'};
+    
+    @media (max-width: 768px) {
+        padding: 0.75rem 1rem;
+    }
 `; 
 
 const Headergroup = styled.header`
@@ -22,18 +26,41 @@ const NavContainer = styled.div`
     justify-content: space-between;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
 `;
 
 const NavLeft = styled.div`
     display: flex;
     align-items: center;
     gap: 2rem;
+    
+    @media (max-width: 768px) {
+        gap: 1rem;
+    }
 `;
 
 const NavRight = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
+    
+    @media (max-width: 768px) {
+        gap: 0.5rem;
+    }
+`;
+
+const MobileMenuButton = styled.button`
+    display: none;
+    background: none;
+    border: none;
+    color: ${props => props.theme.textColor};
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    
+    @media (max-width: 768px) {
+        display: block;
+    }
 `;
 
 const NavList = styled.ul`
@@ -43,6 +70,21 @@ const NavList = styled.ul`
     margin: 0;
     padding: 0;
     list-style: none;
+    
+    @media (max-width: 768px) {
+        display: ${props => props.isOpen ? 'flex' : 'none'};
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: ${props => props.theme.pageBackground};
+        border: 1px solid ${props => props.theme.pageBackground === '#FFFFFF' ? '#e5e7eb' : '#374151'};
+        border-top: none;
+        padding: 1rem 0;
+        gap: 0;
+        z-index: 1000;
+    }
 `;
 
 const NavButton = styled.button`
@@ -70,6 +112,15 @@ const Linkitems = styled.li`
     color: ${props => props.theme.textColor};
     cursor: pointer;
     
+    @media (max-width: 768px) {
+        width: 100%;
+        border-bottom: 1px solid ${props => props.theme.pageBackground === '#FFFFFF' ? '#e5e7eb' : '#374151'};
+        
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+    
     a, button {
         color: ${props => props.theme.textColor};
         text-decoration: none;
@@ -82,6 +133,14 @@ const Linkitems = styled.li`
         border: none;
         cursor: pointer;
         font-family: inherit;
+        
+        @media (max-width: 768px) {
+            display: block;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 0;
+            text-align: left;
+        }
         
         ${props => props.active && `
             color: ${props.theme.pageBackground === '#FFFFFF' ? '#E84545' : '#FF6B6B'};
@@ -138,6 +197,7 @@ const SearchShortcut = styled.span`
 `;
 
 const ModernNav = ({ onToggle, theme, setTheme, currentPage, setCurrentPage }) => {
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { versionData, switchVersion, UI_HEAT_VERSIONS } = useVersion();
 
     const handleVersionChange = (e) => {
@@ -159,6 +219,11 @@ const ModernNav = ({ onToggle, theme, setTheme, currentPage, setCurrentPage }) =
         if (setCurrentPage) {
             setCurrentPage(page);
         }
+        setMobileMenuOpen(false); // Close mobile menu after navigation
+    };
+    
+    const toggleMobileMenu = () => {
+        setMobileMenuOpen(!mobileMenuOpen);
     };
     
     return (
@@ -167,7 +232,10 @@ const ModernNav = ({ onToggle, theme, setTheme, currentPage, setCurrentPage }) =
                 <NavContainer>
                     <NavLeft>
                         <Logo theme={theme} setTheme={setTheme} />
-                        <NavList>
+                        <NavList 
+                            isOpen={mobileMenuOpen}
+                            theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}
+                        >
                              <Linkitems theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}>
                                 <NavButton theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937'}} onClick={() => handleNavClick('landing')}>Home</NavButton>
                             </Linkitems>
@@ -187,6 +255,12 @@ const ModernNav = ({ onToggle, theme, setTheme, currentPage, setCurrentPage }) =
                     </NavLeft>
                     
                     <NavRight>
+                        <MobileMenuButton 
+                            theme={{textColor: theme === 'light' ? '#000000' : '#ffffff'}}
+                            onClick={toggleMobileMenu}
+                        >
+                            {mobileMenuOpen ? '✕' : '☰'}
+                        </MobileMenuButton>
                         <SearchContainer theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}>
                             <SearchInput 
                                 theme={{pageBackground: theme === 'light' ? '#FFFFFF' : '#1f2937', textColor: theme === 'light' ? '#000000' : '#ffffff'}}

@@ -28,6 +28,14 @@ const SocialProofContainer = styled.section`
   padding: 6rem 2rem;
   color: white; /* Using your dark theme text color */
   overflow: hidden;
+  
+  @media (max-width: 768px) {
+    padding: 4rem 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 3rem 0.5rem;
+  }
 `;
 
 const SectionHeader = styled.div`
@@ -58,6 +66,17 @@ const TestimonialsGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 2rem;
   animation: ${fadeInUp} 0.8s ease-out 0.2s both;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin: 0 auto 3rem auto;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 1rem;
+    margin: 0 auto 2rem auto;
+  }
 `;
 
 const TestimonialCard = styled.div`
@@ -72,6 +91,15 @@ const TestimonialCard = styled.div`
     transform: translateY(-5px);
     border-color: #FF6B6B; /* Using your light-coral */
     box-shadow: 0 12px 30px rgba(255, 107, 107, 0.1);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+    border-radius: 12px;
   }
   
   &::before {
@@ -147,6 +175,11 @@ const FrameworkLogos = styled.div`
   
   @media (max-width: 768px) {
     gap: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 1.5rem;
   }
 `;
 
@@ -182,6 +215,16 @@ const StatsContainer = styled.div`
   margin: 0 auto;
   max-width: 800px;
   text-align: center;
+  
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
+  }
 `;
 
 const StatsGrid = styled.div`

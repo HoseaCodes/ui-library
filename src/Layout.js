@@ -28,6 +28,10 @@ const MainContent = styled.div`
     width: 100%;
     flex: 1;
     min-height: 0;
+    
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
 `;
 
 const ContentArea = styled.main`
@@ -35,6 +39,11 @@ const ContentArea = styled.main`
     background-color: ${props => props.theme.pageBackground};
     transition: background-color 0.3s ease;
     min-height: 100vh;
+    
+    @media (max-width: 768px) {
+        padding-left: 0;
+        width: 100%;
+    }
 `;
 
 const Layout = ({ theme, setTheme }) => {

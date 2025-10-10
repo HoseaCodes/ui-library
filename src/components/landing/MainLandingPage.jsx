@@ -17,6 +17,14 @@ const CTASection = styled.section`
   padding: 6rem 2rem;
   text-align: center;
   color: white;
+  
+  @media (max-width: 768px) {
+    padding: 4rem 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 3rem 0.5rem;
+  }
 `;
 
 const CTATitle = styled.h2`
@@ -26,13 +34,18 @@ const CTATitle = styled.h2`
 `;
 
 const CTASubtitle = styled.p`
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
   margin: 0 0 3rem 0;
   opacity: 0.9;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.6;
+  
+  @media (max-width: 768px) {
+    margin: 0 0 2rem 0;
+    max-width: 100%;
+  }
 `;
 
 const CTAButtons = styled.div`
@@ -43,6 +56,7 @@ const CTAButtons = styled.div`
   @media (max-width: 640px) {
     flex-direction: column;
     align-items: center;
+    gap: 0.75rem;
   }
 `;
 
@@ -63,6 +77,13 @@ const CTAPrimaryButton = styled.button`
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     background: #f9fafb;
   }
+  
+  @media (max-width: 640px) {
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
 `;
 
 const CTASecondaryButton = styled.button`
@@ -80,6 +101,13 @@ const CTASecondaryButton = styled.button`
     background: white;
     color: #E84545; /* Using your primary red */
     transform: translateY(-2px);
+  }
+  
+  @media (max-width: 640px) {
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
   }
 `;
 

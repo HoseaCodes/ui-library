@@ -317,12 +317,12 @@ Examples:
       <Section>
         <SectionTitle>Best Practices</SectionTitle>
         <BenefitsList>
-          <BenefitItem><strong>Always specify exact versions</strong> in production code</BenefitItem>
-          <BenefitItem><strong>Use SRI hashes</strong> for all CDN resources</BenefitItem>
-          <BenefitItem><strong>Document which version</strong> you're using in your project</BenefitItem>
-          <BenefitItem><strong>Pin versions</strong> in package managers and CDN links</BenefitItem>
-          <BenefitItem><strong>Test upgrades</strong> in isolated environments before deploying</BenefitItem>
-          <BenefitItem><strong>Keep documentation links</strong> version-specific in code comments</BenefitItem>
+          <BenefitItem><strong>Always specify exact versions</strong> &nbsp; in production code</BenefitItem>
+          <BenefitItem><strong>Use SRI hashes</strong> &nbsp; for all CDN resources</BenefitItem>
+          <BenefitItem><strong>Document which version</strong> &nbsp; you're using in your project</BenefitItem>
+          <BenefitItem><strong>Pin versions</strong> &nbsp; in package managers and CDN links</BenefitItem>
+          <BenefitItem><strong>Test upgrades</strong> &nbsp; in isolated environments before deploying</BenefitItem>
+          <BenefitItem><strong>Keep documentation links</strong> &nbsp; version-specific in code comments</BenefitItem>
         </BenefitsList>
       </Section>
     </DocumentationContainer>

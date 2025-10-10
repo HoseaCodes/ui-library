@@ -16,11 +16,14 @@ import {
   NavContainer,
   Logo,
   NavLinks,
-  NavLink
+  NavLink,
+  MobileMenuButton,
+  MobileMenu
 } from '../components/DesignSystem';
 
 const DashboardDemo = ({ theme }) => {
   const [activeTab, setActiveTab] = useState('overview');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <DesignSystemBase theme={theme}>
@@ -34,7 +37,19 @@ const DashboardDemo = ({ theme }) => {
             <NavLink href="#" onClick={() => setActiveTab('analytics')}>Analytics</NavLink>
             <NavLink href="#" onClick={() => setActiveTab('settings')}>Settings</NavLink>
           </NavLinks>
-          <Button variant="primary" size="sm">Get Started</Button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <Button variant="primary" size="sm">Get Started</Button>
+            <MobileMenuButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              ☰
+            </MobileMenuButton>
+          </div>
+          <MobileMenu isOpen={mobileMenuOpen}>
+            <NavLink href="#" onClick={() => { setActiveTab('overview'); setMobileMenuOpen(false); }}>Dashboard</NavLink>
+            <NavLink href="#" onClick={() => { setActiveTab('components'); setMobileMenuOpen(false); }}>Components</NavLink>
+            <NavLink href="#" onClick={() => { setActiveTab('analytics'); setMobileMenuOpen(false); }}>Analytics</NavLink>
+            <NavLink href="#" onClick={() => { setActiveTab('settings'); setMobileMenuOpen(false); }}>Settings</NavLink>
+            <Button variant="primary" size="sm" style={{ marginTop: '0.5rem' }}>Get Started</Button>
+          </MobileMenu>
         </NavContainer>
       </Nav>
 

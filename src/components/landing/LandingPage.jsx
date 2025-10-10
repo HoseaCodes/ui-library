@@ -44,10 +44,59 @@ const HeroSection = styled.section`
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 2rem;
+  padding: 2rem 1rem;
   text-align: center;
   position: relative;
   overflow: hidden;
+  
+  @media (max-width: 768px) {
+    padding: 1rem 0.5rem;
+    min-height: 80vh;
+  }
+`;
+
+const HeroContent = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  z-index: 1;
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+`;
+
+const HeroTitle = styled.h1`
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 900;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FF6B6B 50%, #E84545 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: ${fadeInUp} 1s ease-out;
+  
+  @media (max-width: 768px) {
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+  }
+`;
+
+const HeroSubtitle = styled.p`
+  font-size: clamp(1.125rem, 3vw, 1.5rem);
+  color: #d1d5db;
+  margin: 0 0 3rem 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  animation: ${fadeInUp} 1s ease-out 0.2s both;
+  
+  @media (max-width: 768px) {
+    margin: 0 0 2rem 0;
+    max-width: 100%;
+  }
 `;
 
 const BackgroundGradient = styled.div`
@@ -56,28 +105,8 @@ const BackgroundGradient = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.1) 0%, transparent 50%); /* Using your light-coral */
+  background: radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
   pointer-events: none;
-`;
-
-const HeroTitle = styled.h1`
-  font-size: clamp(3rem, 8vw, 6rem);
-  font-weight: 800;
-  margin: 0 0 1rem 0;
-  background: linear-gradient(135deg, #FFFFFF 0%, #FF6B6B 100%); /* Using your light-coral */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: ${fadeInUp} 0.8s ease-out;
-`;
-
-const HeroSubtitle = styled.p`
-  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
-  color: #d1d5db; /* Using your dark theme text-secondary */
-  max-width: 600px;
-  margin: 0 0 3rem 0;
-  line-height: 1.6;
-  animation: ${fadeInUp} 0.8s ease-out 0.2s both;
 `;
 
 const CTAContainer = styled.div`
@@ -90,11 +119,12 @@ const CTAContainer = styled.div`
     flex-direction: column;
     width: 100%;
     max-width: 300px;
+    gap: 0.75rem;
   }
 `;
 
 const PrimaryButton = styled.button`
-  background: #E84545; /* Using your primary red */
+  background: #E84545;
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -103,10 +133,10 @@ const PrimaryButton = styled.button`
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(232, 69, 69, 0.3); /* Using your primary red */
+  box-shadow: 0 4px 20px rgba(232, 69, 69, 0.3);
   
   &:hover {
-    background: #C62828; /* Using your deep red */
+    background: #C62828;
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(232, 69, 69, 0.4);
   }
@@ -114,12 +144,18 @@ const PrimaryButton = styled.button`
   &:active {
     transform: translateY(0);
   }
+  
+  @media (max-width: 640px) {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
 `;
 
 const SecondaryButton = styled.button`
   background: transparent;
   color: white;
-  border: 2px solid #FF6B6B; /* Using your light-coral */
+  border: 2px solid #FF6B6B;
   padding: 1rem 2rem;
   font-size: 1.125rem;
   font-weight: 600;
@@ -128,14 +164,20 @@ const SecondaryButton = styled.button`
   transition: all 0.3s ease;
   
   &:hover {
-    background: #FF6B6B; /* Using your light-coral */
+    background: #FF6B6B;
     transform: translateY(-2px);
+  }
+  
+  @media (max-width: 640px) {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
   }
 `;
 
 const CodeBlock = styled.div`
-  background: #262626; /* Using your dark theme surface */
-  border: 1px solid #525252; /* Using your dark theme border */
+  background: #262626;
+  border: 1px solid #525252;
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 3rem;
@@ -143,6 +185,17 @@ const CodeBlock = styled.div`
   position: relative;
   animation: ${fadeInUp} 0.8s ease-out 0.6s both;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.75rem;
+    border-radius: 8px;
+  }
 `;
 
 const CodeHeader = styled.div`

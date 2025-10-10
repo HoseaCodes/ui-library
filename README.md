@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![UI Heat Logo](packages/assets/logo.png)
+![UI Heat Logo](./assets/logo-nobg.png)
 
 **A modern, framework-agnostic component library for faster web development**
 
@@ -233,8 +233,7 @@ npm run build
 | 📖 **Storybook** | Interactive component playground | [storybook.uiheat.com](https://storybook.uiheat.com) |
 | 📦 **NPM Package** | Install UI Heat in your project | [npmjs.com/package/ui-heat](https://www.npmjs.com/package/ui-heat) |
 | 💻 **GitHub** | Source code and issue tracking | [github.com/HoseaCodes/ui-library](https://github.com/HoseaCodes/ui-library) |
-| 💬 **Discord** | Community support and discussions | [discord.gg/ui-heat](https://discord.gg/ui-heat) |
-| 🐦 **Twitter** | Updates and announcements | [@ui_heat](https://twitter.com/ui_heat) |
+<!-- | 🐦 **Twitter** | Updates and announcements | [@ui_heat](https://twitter.com/ui_heat) | -->
 
 ## 🎨 Theming & Customization
 

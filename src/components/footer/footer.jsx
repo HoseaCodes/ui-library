@@ -144,7 +144,6 @@ const Footer = ({ theme }) => {
         <FooterSection>
           <FooterLogo>
             <Logo />
-            <LogoText>UI Heat</LogoText>
           </FooterLogo>
           <FooterDescription>
             A modern, framework-agnostic component library built for developers who value simplicity, performance, and flexibility.

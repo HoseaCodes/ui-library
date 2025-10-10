@@ -26,33 +26,58 @@ const slideIn = keyframes`
 
 // Styled Components
 const FeaturesContainer = styled.section`
-  background: #1a1a1a; /* Using your dark theme background */
-  padding: 8rem 2rem;
-  color: white; /* Using your dark theme text color */
+  background: #1a1a1a;
+  padding: 6rem 2rem;
+  color: white;
+  
+  @media (max-width: 768px) {
+    padding: 4rem 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 3rem 0.5rem;
+  }
 `;
 
 const SectionHeader = styled.div`
   text-align: center;
   margin-bottom: 6rem;
   animation: ${fadeInUp} 0.8s ease-out;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 4rem;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 3rem;
+  }
 `;
 
 const SectionTitle = styled.h2`
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
   margin: 0 0 1rem 0;
-  background: linear-gradient(135deg, #FFFFFF 0%, #FF6B6B 100%); /* Using your light-coral */
+  background: linear-gradient(135deg, #FFFFFF 0%, #FF6B6B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  
+  @media (max-width: 768px) {
+    margin: 0 0 0.75rem 0;
+  }
 `;
 
 const SectionSubtitle = styled.p`
-  font-size: 1.25rem;
-  color: #d1d5db; /* Using your dark theme text-secondary */
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: #d1d5db;
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
 `;
 
 const FeatureGrid = styled.div`
@@ -60,7 +85,15 @@ const FeatureGrid = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 8rem;
+  gap: 6rem;
+  
+  @media (max-width: 768px) {
+    gap: 4rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 3rem;
+  }
 `;
 
 const FeatureRow = styled.div`
@@ -84,6 +117,14 @@ const FeatureRow = styled.div`
     &:nth-child(even) {
       direction: ltr;
     }
+  }
+  
+  @media (max-width: 768px) {
+    gap: 2rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 1.5rem;
   }
 `;
 
@@ -119,60 +160,89 @@ const FeatureTitle = styled.h4`
 `;
 
 const FeatureDescription = styled.p`
-  font-size: 1.125rem;
-  color: #d1d5db; /* Using your dark theme text-secondary */
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  color: #d1d5db;
   line-height: 1.6;
   margin-bottom: 2rem;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const FeatureDemo = styled.div`
-  background: #262626; /* Using your dark theme surface */
-  border: 1px solid #525252; /* Using your dark theme border */
+  background: #262626;
+  border: 1px solid #525252;
   border-radius: 12px;
   overflow: hidden;
   animation: ${fadeInUp} 0.8s ease-out 0.2s both;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  
+  @media (max-width: 768px) {
+    border-radius: 8px;
+  }
 `;
 
 const CodeTabs = styled.div`
   display: flex;
-  background: #1a1a1a; /* Using your dark theme background */
+  background: #1a1a1a;
   border-bottom: 1px solid #525252;
+  overflow-x: auto;
+  
+  @media (max-width: 640px) {
+    padding: 0;
+  }
 `;
 
 const CodeTab = styled.button`
-  background: ${props => props.active ? '#262626' : 'transparent'}; /* Using your dark theme surface */
+  background: ${props => props.active ? '#262626' : 'transparent'};
   border: none;
-  color: ${props => props.active ? '#FF6B6B' : '#9ca3af'}; /* Using your light-coral and text-muted */
+  color: ${props => props.active ? '#FF6B6B' : '#9ca3af'};
   padding: 1rem 1.5rem;
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
   border-bottom: 2px solid ${props => props.active ? '#FF6B6B' : 'transparent'};
+  white-space: nowrap;
+  flex-shrink: 0;
   
   &:hover {
-    color: #FF6B6B; /* Using your light-coral */
+    color: #FF6B6B;
+  }
+  
+  @media (max-width: 640px) {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
   }
 `;
 
 const CodeContent = styled.pre`
   margin: 0;
-  padding: 1.5rem;
+  padding: 2rem;
   font-family: 'Fira Code', 'JetBrains Mono', monospace;
   font-size: 0.875rem;
   color: white;
   overflow-x: auto;
-  line-height: 1.5;
+  line-height: 1.6;
+  background: #1a1a1a;
   
-  .keyword { color: #FF6B6B; } /* Using your light-coral */
+  .keyword { color: #FF6B6B; }
   .string { color: #10B981; }
   .comment { color: #6B7280; }
   .function { color: #F59E0B; }
-  .variable { color: #EF4444; }
-`;
-
-const InteractiveDemo = styled.div`
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    font-size: 0.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+`;const InteractiveDemo = styled.div`
   background: #262626; /* Using your dark theme surface */
   border: 1px solid #525252; /* Using your dark theme border */
   border-radius: 12px;

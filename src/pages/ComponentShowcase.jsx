@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   DesignSystemBase,
   Button,
@@ -16,10 +16,13 @@ import {
   NavContainer,
   Logo,
   NavLinks,
-  NavLink
+  NavLink,
+  MobileMenuButton,
+  MobileMenu
 } from '../components/DesignSystem';
 
 const ComponentShowcase = ({ theme }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <DesignSystemBase theme={theme}>
       {/* Navigation */}
@@ -31,7 +34,18 @@ const ComponentShowcase = ({ theme }) => {
             <NavLink href="/components">Components</NavLink>
             <NavLink href="/docs">Documentation</NavLink>
           </NavLinks>
-          <Button variant="primary" size="sm">Download</Button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <Button variant="primary" size="sm">Download</Button>
+            <MobileMenuButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              ☰
+            </MobileMenuButton>
+          </div>
+          <MobileMenu isOpen={mobileMenuOpen}>
+            <NavLink href="/dashboard" onClick={() => setMobileMenuOpen(false)}>Dashboard</NavLink>
+            <NavLink href="/components" onClick={() => setMobileMenuOpen(false)}>Components</NavLink>
+            <NavLink href="/docs" onClick={() => setMobileMenuOpen(false)}>Documentation</NavLink>
+            <Button variant="primary" size="sm" style={{ marginTop: '0.5rem' }}>Download</Button>
+          </MobileMenu>
         </NavContainer>
       </Nav>
 
