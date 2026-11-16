@@ -197,6 +197,13 @@ existing copy, make it work in isolation (no app-specific imports, cookie
 names, env vars without defaults), add it to `registry.json`, run `npm run check`,
 and install it into one real project before relying on it.
 
-### Next candidates
+## Upcoming
 
-- Google / GitHub sign-in for the native auth items.
+- **Google / GitHub sign-in for the native auth items.** Needs `expo-auth-session`
+  and OAuth client IDs per platform, so it's more setup than the web version's popup.
+- **Verify native auth on a device.** It's been tested on an Expo web build and
+  bundled for iOS, but not yet run on a phone or simulator.
+- **Move existing Expo apps onto the native auth items.** `wingman2` and
+  `spanish101` have their own `firebase.js` and `AuthContext`; swapping them for
+  `firebase-native` and `firebase-auth-native` also removes wingman2's
+  "demo mode" (any login succeeds when config is missing) and spanish101's debug logging.
