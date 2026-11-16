@@ -197,13 +197,16 @@ existing copy, make it work in isolation (no app-specific imports, cookie
 names, env vars without defaults), add it to `registry.json`, run `npm run check`,
 and install it into one real project before relying on it.
 
-## Upcoming
+## Roadmap
 
-- **Google / GitHub sign-in for the native auth items.** Needs `expo-auth-session`
-  and OAuth client IDs per platform, so it's more setup than the web version's popup.
-- **Verify native auth on a device.** It's been tested on an Expo web build and
-  bundled for iOS, but not yet run on a phone or simulator.
-- **Move existing Expo apps onto the native auth items.** `wingman2` and
-  `spanish101` have their own `firebase.js` and `AuthContext`; swapping them for
-  `firebase-native` and `firebase-auth-native` also removes wingman2's
-  "demo mode" (any login succeeds when config is missing) and spanish101's debug logging.
+| # | Step | Status | Notes |
+|---|---|---|---|
+| 1 | Serve the registry from GitHub Pages | Done | `.github/workflows/pages.yml` deploys `public/` on push to `master`; `public/index.html` redirects to this README |
+| 2 | Point `uiheat.com` at Pages | To do | Settings → Pages: source "GitHub Actions", custom domain `uiheat.com`, enforce HTTPS. DNS: remove the old Netlify records; `A` records for the apex to `185.199.108.153`–`111.153`, `www` CNAME to `hoseacodes.github.io`. Verify the domain on the GitHub account |
+| 3 | Switch the registry URL to `https://uiheat.com/r/{name}.json` | To do | Only after step 2 serves over HTTPS. Change `REGISTRY_URL` in `cli/bin/uiheat.js`, the `components.json` example above and `homepage` in `registry.json`, then release the CLI (`cli-v2.1.0`). Keep `public/r/` committed so the raw GitHub URL keeps working |
+| 4 | Update stale links | To do | Repo homepage and npm page point at `www.uiheat.com`; `npm deprecate uiheat@"<2"` for the old v1 package |
+| 5 | Clean up the old site | To do | Delete the Netlify site `fluffy-mandazi-b29ec5` and the `deploy` / `landing` branches |
+| 6 | List `@uiheat` in shadcn's registry index | Optional | So `npx shadcn add @uiheat/<item>` works without a `registries` entry. Check shadcn's current submission rules first |
+| 7 | Verify native auth on a device | To do | Tested on an Expo web build and bundled for iOS, not yet run on a phone or simulator |
+| 8 | Move existing Expo apps onto the native auth items | To do | `wingman2` and `spanish101` have their own `firebase.js` and `AuthContext`; swapping them removes wingman2's "demo mode" (any login succeeds when config is missing) and spanish101's debug logging |
+| 9 | Google / GitHub sign-in for native auth | Later | Needs `expo-auth-session` and OAuth client IDs per platform, so it's more setup than the web version's popup |
