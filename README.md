@@ -46,6 +46,16 @@ its own `button.tsx`, the install stops and asks before overwriting.
 
 ## Use it in a project
 
+The easy way is the [`uiheat` CLI](cli/), which configures everything below for you:
+
+```bash
+npx uiheat create my-site        # new app with theme + starter
+npx uiheat add landing-page      # add items to an existing project
+npx uiheat list
+```
+
+### By hand with the shadcn CLI
+
 **1. Point the project at the registry** in `components.json`:
 
 ```json

@@ -5,7 +5,8 @@
     "build": "shadcn build",
     "typecheck": "tsc -p .",
     "check": "npm run typecheck && npm run build",
-    "serve": "npx --yes serve@14.2.4 public -l 4000 --cors"
+    "serve": "npx --yes serve@14.2.4 public -l 4000 --cors",
+    "cli:pack": "npm pack ./cli --dry-run"
   },
   "devDependencies": {
     "@types/node": "^20.19.43",
