@@ -31,6 +31,7 @@ passed through to shadcn, and `-c <dir>` runs against another directory.
 - **Landing page:** `landing-page` (everything), or individually `landing-header`,
   `landing-hero`, `landing-how-it-works`, `landing-testimonials`, `landing-faq`,
   `landing-contact`, `landing-footer`, `contact-api`
+- **Dashboard:** `dashboard` (shell + example layout), or just `dashboard-shell`
 - **Server helpers:** `mongodb`, `logger`
 
 Run `npx uiheat list` for descriptions.

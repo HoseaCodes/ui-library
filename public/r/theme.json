@@ -47,6 +47,16 @@
               "3": "hsl(var(--chart-3))",
               "4": "hsl(var(--chart-4))",
               "5": "hsl(var(--chart-5))"
+            },
+            "sidebar": {
+              "DEFAULT": "hsl(var(--sidebar-background))",
+              "foreground": "hsl(var(--sidebar-foreground))",
+              "primary": "hsl(var(--sidebar-primary))",
+              "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+              "accent": "hsl(var(--sidebar-accent))",
+              "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+              "border": "hsl(var(--sidebar-border))",
+              "ring": "hsl(var(--sidebar-ring))"
             }
           },
           "borderRadius": {
@@ -84,7 +94,16 @@
       "chart-2": "0 66% 47%",
       "chart-3": "1 83% 63%",
       "chart-4": "0 100% 71%",
-      "chart-5": "0 0% 45%"
+      "chart-5": "0 0% 45%",
+      "sidebar": "0 0% 98%",
+      "sidebar-background": "0 0% 98%",
+      "sidebar-foreground": "0 0% 9%",
+      "sidebar-primary": "0 78% 59%",
+      "sidebar-primary-foreground": "0 0% 100%",
+      "sidebar-accent": "0 100% 97%",
+      "sidebar-accent-foreground": "0 66% 47%",
+      "sidebar-border": "0 0% 90%",
+      "sidebar-ring": "0 78% 59%"
     },
     "dark": {
       "background": "0 0% 10%",
@@ -110,7 +129,16 @@
       "chart-2": "1 83% 63%",
       "chart-3": "0 78% 59%",
       "chart-4": "0 66% 47%",
-      "chart-5": "0 0% 64%"
+      "chart-5": "0 0% 64%",
+      "sidebar": "0 0% 8%",
+      "sidebar-background": "0 0% 8%",
+      "sidebar-foreground": "0 0% 98%",
+      "sidebar-primary": "0 100% 71%",
+      "sidebar-primary-foreground": "0 0% 10%",
+      "sidebar-accent": "0 35% 20%",
+      "sidebar-accent-foreground": "0 100% 71%",
+      "sidebar-border": "0 0% 21%",
+      "sidebar-ring": "0 100% 71%"
     }
   },
   "type": "registry:theme"

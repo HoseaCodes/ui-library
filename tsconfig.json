@@ -38,6 +38,27 @@
       "@/components/ui/accordion": [
         "typecheck/shadcn.d.ts"
       ],
+      "@/components/ui/sidebar": [
+        "typecheck/shadcn.d.ts"
+      ],
+      "@/components/ui/breadcrumb": [
+        "typecheck/shadcn.d.ts"
+      ],
+      "@/components/ui/collapsible": [
+        "typecheck/shadcn.d.ts"
+      ],
+      "@/components/ui/avatar": [
+        "typecheck/shadcn.d.ts"
+      ],
+      "@/components/ui/separator": [
+        "typecheck/shadcn.d.ts"
+      ],
+      "@/components/ui/card": [
+        "typecheck/shadcn.d.ts"
+      ],
+      "@/components/dashboard/*": [
+        "registry/uiheat/blocks/dashboard/*"
+      ],
       "@/components/ui/*": [
         "registry/uiheat/ui/*"
       ],

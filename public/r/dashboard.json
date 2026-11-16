@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dashboard",
+  "title": "Dashboard",
+  "description": "Dashboard shell plus an example nav config, app/dashboard layout (remembers collapsed state) and a placeholder overview page.",
+  "registryDependencies": [
+    "@uiheat/dashboard-shell",
+    "@uiheat/mode-toggle",
+    "card",
+    "dropdown-menu"
+  ],
+  "files": [
+    {
+      "path": "registry/uiheat/blocks/dashboard/dashboard-example.tsx",
+      "content": "\"use client\";\n\n/**\n * Example dashboard frame. Nav config lives here (a client file) because icon\n * components can't be passed from a server layout. Replace the sample entries.\n */\n\nimport * as React from \"react\";\nimport {\n  BarChart3,\n  CreditCard,\n  FileText,\n  FolderKanban,\n  LayoutDashboard,\n  LifeBuoy,\n  MessageSquare,\n  Settings,\n  Users,\n} from \"lucide-react\";\n\nimport { ModeToggle } from \"@/components/mode-toggle\";\nimport { DropdownMenuItem } from \"@/components/ui/dropdown-menu\";\nimport { DashboardShell } from \"@/components/dashboard/dashboard-shell\";\nimport type { NavSection } from \"@/components/dashboard/nav\";\n\nconst sections: NavSection[] = [\n  {\n    items: [\n      { title: \"Overview\", href: \"/dashboard\", icon: LayoutDashboard, exact: true },\n      { title: \"Projects\", href: \"/dashboard/projects\", icon: FolderKanban },\n      { title: \"Clients\", href: \"/dashboard/clients\", icon: Users },\n      { title: \"Messages\", href: \"/dashboard/messages\", icon: MessageSquare, badge: 3 },\n      {\n        title: \"Reports\",\n        href: \"/dashboard/reports\",\n        icon: BarChart3,\n        items: [\n          { title: \"Revenue\", href: \"/dashboard/reports/revenue\" },\n          { title: \"Pipeline\", href: \"/dashboard/reports/pipeline\" },\n        ],\n      },\n      { title: \"Invoices\", href: \"/dashboard/invoices\", icon: FileText },\n    ],\n  },\n  {\n    label: \"Settings\",\n    items: [\n      { title: \"Settings\", href: \"/dashboard/settings\", icon: Settings },\n      { title: \"Billing\", href: \"/dashboard/billing\", icon: CreditCard },\n    ],\n  },\n];\n\nexport function DashboardExample({\n  children,\n  defaultOpen,\n}: {\n  children: React.ReactNode;\n  defaultOpen?: boolean;\n}) {\n  return (\n    <DashboardShell\n      defaultOpen={defaultOpen}\n      brand={{ name: \"Acme Studio\", subtitle: \"Workspace\" }}\n      sections={sections}\n      user={{ name: \"Jordan Lee\", email: \"jordan@example.com\" }}\n      userMenu={\n        <DropdownMenuItem asChild>\n          <a href=\"mailto:support@example.com\">\n            <LifeBuoy /> Support\n          </a>\n        </DropdownMenuItem>\n      }\n      // Wire to your auth, e.g. next-auth's signOut({ callbackUrl: \"/login\" }).\n      onSignOut={() => alert(\"Sign out\")}\n      actions={<ModeToggle />}\n    >\n      {children}\n    </DashboardShell>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/dashboard/dashboard-example.tsx"
+    },
+    {
+      "path": "registry/uiheat/blocks/dashboard/layout.tsx",
+      "content": "import { cookies } from \"next/headers\";\n\nimport { DashboardExample } from \"@/components/dashboard/dashboard-example\";\n\nexport default async function DashboardLayout({ children }: { children: React.ReactNode }) {\n  // shadcn's sidebar stores its expanded/collapsed state in this cookie.\n  const defaultOpen = (await cookies()).get(\"sidebar_state\")?.value !== \"false\";\n  return <DashboardExample defaultOpen={defaultOpen}>{children}</DashboardExample>;\n}\n",
+      "type": "registry:page",
+      "target": "app/dashboard/layout.tsx"
+    },
+    {
+      "path": "registry/uiheat/blocks/dashboard/page.tsx",
+      "content": "import { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\";\n\nconst stats = [\n  { label: \"Revenue\", value: \"$12,480\", note: \"+8% this month\" },\n  { label: \"Active projects\", value: \"14\", note: \"3 due this week\" },\n  { label: \"Unpaid invoices\", value: \"5\", note: \"$3,240 outstanding\" },\n];\n\nexport default function DashboardPage() {\n  return (\n    <div className=\"space-y-6\">\n      <div>\n        <h1 className=\"text-2xl font-semibold tracking-tight\">Overview</h1>\n        <p className=\"text-sm text-muted-foreground\">Placeholder page from @uiheat/dashboard. Replace with your own.</p>\n      </div>\n      <div className=\"grid gap-4 sm:grid-cols-3\">\n        {stats.map((s) => (\n          <Card key={s.label}>\n            <CardHeader>\n              <CardDescription>{s.label}</CardDescription>\n              <CardTitle className=\"text-2xl tabular-nums\">{s.value}</CardTitle>\n            </CardHeader>\n            <CardContent className=\"text-xs text-muted-foreground\">{s.note}</CardContent>\n          </Card>\n        ))}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:page",
+      "target": "app/dashboard/page.tsx"
+    }
+  ],
+  "type": "registry:block"
+}

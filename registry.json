@@ -55,6 +55,16 @@
                   "3": "hsl(var(--chart-3))",
                   "4": "hsl(var(--chart-4))",
                   "5": "hsl(var(--chart-5))"
+                },
+                "sidebar": {
+                  "DEFAULT": "hsl(var(--sidebar-background))",
+                  "foreground": "hsl(var(--sidebar-foreground))",
+                  "primary": "hsl(var(--sidebar-primary))",
+                  "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+                  "accent": "hsl(var(--sidebar-accent))",
+                  "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+                  "border": "hsl(var(--sidebar-border))",
+                  "ring": "hsl(var(--sidebar-ring))"
                 }
               },
               "borderRadius": {
@@ -92,7 +102,16 @@
           "chart-2": "0 66% 47%",
           "chart-3": "1 83% 63%",
           "chart-4": "0 100% 71%",
-          "chart-5": "0 0% 45%"
+          "chart-5": "0 0% 45%",
+          "sidebar": "0 0% 98%",
+          "sidebar-background": "0 0% 98%",
+          "sidebar-foreground": "0 0% 9%",
+          "sidebar-primary": "0 78% 59%",
+          "sidebar-primary-foreground": "0 0% 100%",
+          "sidebar-accent": "0 100% 97%",
+          "sidebar-accent-foreground": "0 66% 47%",
+          "sidebar-border": "0 0% 90%",
+          "sidebar-ring": "0 78% 59%"
         },
         "dark": {
           "background": "0 0% 10%",
@@ -118,7 +137,16 @@
           "chart-2": "1 83% 63%",
           "chart-3": "0 78% 59%",
           "chart-4": "0 66% 47%",
-          "chart-5": "0 0% 64%"
+          "chart-5": "0 0% 64%",
+          "sidebar": "0 0% 8%",
+          "sidebar-background": "0 0% 8%",
+          "sidebar-foreground": "0 0% 98%",
+          "sidebar-primary": "0 100% 71%",
+          "sidebar-primary-foreground": "0 0% 10%",
+          "sidebar-accent": "0 35% 20%",
+          "sidebar-accent-foreground": "0 100% 71%",
+          "sidebar-border": "0 0% 21%",
+          "sidebar-ring": "0 100% 71%"
         }
       }
     },
@@ -458,6 +486,73 @@
           "path": "registry/uiheat/blocks/landing/landing-example.tsx",
           "type": "registry:component",
           "target": "components/landing/landing-example.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dashboard-shell",
+      "type": "registry:block",
+      "title": "Dashboard shell",
+      "description": "Sidebar + breadcrumb top bar + content area. Nav from config: icons, badges, sections, sub-menus; collapses to icons, drawer on mobile, user menu with sign out.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "sidebar",
+        "breadcrumb",
+        "collapsible",
+        "avatar",
+        "dropdown-menu"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/dashboard/nav.ts",
+          "type": "registry:component",
+          "target": "components/dashboard/nav.ts"
+        },
+        {
+          "path": "registry/uiheat/blocks/dashboard/app-sidebar.tsx",
+          "type": "registry:component",
+          "target": "components/dashboard/app-sidebar.tsx"
+        },
+        {
+          "path": "registry/uiheat/blocks/dashboard/dashboard-breadcrumbs.tsx",
+          "type": "registry:component",
+          "target": "components/dashboard/dashboard-breadcrumbs.tsx"
+        },
+        {
+          "path": "registry/uiheat/blocks/dashboard/dashboard-shell.tsx",
+          "type": "registry:component",
+          "target": "components/dashboard/dashboard-shell.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dashboard",
+      "type": "registry:block",
+      "title": "Dashboard",
+      "description": "Dashboard shell plus an example nav config, app/dashboard layout (remembers collapsed state) and a placeholder overview page.",
+      "registryDependencies": [
+        "@uiheat/dashboard-shell",
+        "@uiheat/mode-toggle",
+        "card",
+        "dropdown-menu"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/dashboard/dashboard-example.tsx",
+          "type": "registry:component",
+          "target": "components/dashboard/dashboard-example.tsx"
+        },
+        {
+          "path": "registry/uiheat/blocks/dashboard/layout.tsx",
+          "type": "registry:page",
+          "target": "app/dashboard/layout.tsx"
+        },
+        {
+          "path": "registry/uiheat/blocks/dashboard/page.tsx",
+          "type": "registry:page",
+          "target": "app/dashboard/page.tsx"
         }
       ]
     }

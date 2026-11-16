@@ -17,6 +17,24 @@ they can be edited per project. No package versions to bump.
 | `@uiheat/mongodb` | Cached `MongoClient` for Next.js + `getDb()`, bounded pool |
 | `@uiheat/logger` | `new Logger("svc").info(msg, data)`: stdout, works on Vercel, `LOG_FORMAT=json` |
 
+### Dashboard
+
+| Item | What you get |
+|---|---|
+| `@uiheat/dashboard` | The shell plus an example nav config, `app/dashboard/layout.tsx` (remembers collapsed state) and a placeholder overview page |
+| `@uiheat/dashboard-shell` | Sidebar + breadcrumb top bar + content area, built on shadcn's `sidebar` |
+
+Nav is plain config: `{ title, href, icon?, badge?, exact?, items? }` grouped into
+optional labelled sections. Active links match by path segment (so
+`/dashboard/notes` isn't active on `/dashboard/notes-archive`), sub-menus open on
+their active page, breadcrumbs use nav titles and fall back to the URL. The
+sidebar collapses to icons (⌘/Ctrl+B), becomes a drawer on mobile, and has a
+user menu with `onSignOut` for whatever auth you use.
+
+```bash
+npx uiheat add dashboard        # then edit components/dashboard/dashboard-example.tsx
+```
+
 ### Landing page blocks
 
 | Item | What you get |
@@ -120,5 +138,4 @@ and install it into one real project before relying on it.
 
 From a scan of `~/dev/gitviews`, in rough order of payoff:
 
-- Dashboard sidebar layout (`ambitious-admin`, `insightlytics`, `invoice`)
 - Firebase init + `AuthContext` (web and Expo; copies have drifted, so reconcile first)
