@@ -555,6 +555,89 @@
           "target": "app/dashboard/page.tsx"
         }
       ]
+    },
+    {
+      "name": "firebase",
+      "type": "registry:lib",
+      "title": "Firebase client",
+      "description": "Single Firebase app with auth, Firestore and lazy Storage, configured from NEXT_PUBLIC_FIREBASE_* env vars.",
+      "dependencies": [
+        "firebase"
+      ],
+      "envVars": {
+        "NEXT_PUBLIC_FIREBASE_API_KEY": "",
+        "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN": "",
+        "NEXT_PUBLIC_FIREBASE_PROJECT_ID": "",
+        "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET": "",
+        "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "",
+        "NEXT_PUBLIC_FIREBASE_APP_ID": ""
+      },
+      "files": [
+        {
+          "path": "registry/uiheat/lib/firebase.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "firebase-auth",
+      "type": "registry:block",
+      "title": "Firebase auth",
+      "description": "AuthProvider + useAuth() (email/password, Google, GitHub, reset, sign out), friendly error messages, optional users/{uid} profile on first sign-in, and a RequireAuth guard.",
+      "dependencies": [
+        "firebase"
+      ],
+      "registryDependencies": [
+        "@uiheat/firebase",
+        "@uiheat/spinner"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/auth/auth-provider.tsx",
+          "type": "registry:component",
+          "target": "components/auth/auth-provider.tsx"
+        },
+        {
+          "path": "registry/uiheat/blocks/auth/require-auth.tsx",
+          "type": "registry:component",
+          "target": "components/auth/require-auth.tsx"
+        }
+      ]
+    },
+    {
+      "name": "auth-pages",
+      "type": "registry:block",
+      "title": "Auth pages",
+      "description": "Sign in, sign up and reset password pages (app/login, app/signup, app/reset-password) using Firebase auth, with Google/GitHub buttons and safe ?next= redirects.",
+      "registryDependencies": [
+        "@uiheat/firebase-auth",
+        "button",
+        "card",
+        "input",
+        "label"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/auth/auth-form.tsx",
+          "type": "registry:component",
+          "target": "components/auth/auth-form.tsx"
+        },
+        {
+          "path": "registry/uiheat/blocks/auth/page-login.tsx",
+          "type": "registry:page",
+          "target": "app/login/page.tsx"
+        },
+        {
+          "path": "registry/uiheat/blocks/auth/page-signup.tsx",
+          "type": "registry:page",
+          "target": "app/signup/page.tsx"
+        },
+        {
+          "path": "registry/uiheat/blocks/auth/page-reset-password.tsx",
+          "type": "registry:page",
+          "target": "app/reset-password/page.tsx"
+        }
+      ]
     }
   ]
 }

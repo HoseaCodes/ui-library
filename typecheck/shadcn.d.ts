@@ -54,3 +54,4 @@ export declare const CardContent: Loose;
 export declare const CardDescription: Loose;
 export declare const CardHeader: Loose;
 export declare const CardTitle: Loose;
+export declare const CardFooter: Loose;

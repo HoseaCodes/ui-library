@@ -35,6 +35,32 @@ user menu with `onSignOut` for whatever auth you use.
 npx uiheat add dashboard        # then edit components/dashboard/dashboard-example.tsx
 ```
 
+### Firebase auth (web)
+
+| Item | What you get |
+|---|---|
+| `@uiheat/auth-pages` | `/login`, `/signup`, `/reset-password` pages: email/password plus Google (GitHub optional), friendly errors, safe `?next=` redirects |
+| `@uiheat/firebase-auth` | `AuthProvider`, `useAuth()` (`signIn`, `signUp`, `signInWithGoogle`, `signInWithGitHub`, `resetPassword`, `signOut`), `RequireAuth` guard, optional `users/{uid}` profile on first sign-in |
+| `@uiheat/firebase` | `lib/firebase.ts`: one app, `auth`, `db`, lazy `storage()`, config from `NEXT_PUBLIC_FIREBASE_*`, emulator support |
+
+```bash
+npx uiheat add auth-pages        # pulls in firebase-auth and firebase
+```
+
+1. Fill the `NEXT_PUBLIC_FIREBASE_*` values in `.env.local` (Firebase console →
+   Project settings → Your apps). They're public identifiers, not secrets.
+2. Wrap your root layout's children in `<AuthProvider>`.
+3. Protect pages with `<RequireAuth>`; with the dashboard, use
+   `const { user, signOut } = useAuth()` for its `user` and `onSignOut`.
+
+`RequireAuth` only hides UI. Protect data with Firestore Security Rules, e.g.
+`allow read, write: if request.auth.uid == uid;` on `users/{uid}`. Assign roles
+in the console or server-side, never from the email address on the client.
+
+Local development without touching production: run
+`npx firebase-tools emulators:start --only auth,firestore --project demo-<name>`
+and set `NEXT_PUBLIC_FIREBASE_EMULATOR_HOST=127.0.0.1`.
+
 ### Landing page blocks
 
 | Item | What you get |
@@ -138,4 +164,6 @@ and install it into one real project before relying on it.
 
 From a scan of `~/dev/gitviews`, in rough order of payoff:
 
-- Firebase init + `AuthContext` (web and Expo; copies have drifted, so reconcile first)
+- Expo / React Native: Firebase auth context and login/sign-up screens
+  (`spanish101`, `SpanishFluencyApp`, `wingman2`, `ZenScreen`, `KidsverCity`).
+  Needs the CLI to support projects without global CSS first.

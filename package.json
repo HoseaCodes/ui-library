@@ -14,6 +14,7 @@
     "@types/react": "^19.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "firebase": "^13.3.0",
     "framer-motion": "^14.14.0",
     "lucide-react": "^1.73.0",
     "mongodb": "^7.9.0",

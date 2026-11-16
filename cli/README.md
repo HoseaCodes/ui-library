@@ -32,6 +32,7 @@ passed through to shadcn, and `-c <dir>` runs against another directory.
   `landing-hero`, `landing-how-it-works`, `landing-testimonials`, `landing-faq`,
   `landing-contact`, `landing-footer`, `contact-api`
 - **Dashboard:** `dashboard` (shell + example layout), or just `dashboard-shell`
+- **Auth (Firebase):** `auth-pages` (login/sign-up/reset pages), `firebase-auth`, `firebase`
 - **Server helpers:** `mongodb`, `logger`
 
 Run `npx uiheat list` for descriptions.

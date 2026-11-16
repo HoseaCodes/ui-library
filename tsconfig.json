@@ -56,6 +56,9 @@
       "@/components/ui/card": [
         "typecheck/shadcn.d.ts"
       ],
+      "@/components/auth/*": [
+        "registry/uiheat/blocks/auth/*"
+      ],
       "@/components/dashboard/*": [
         "registry/uiheat/blocks/dashboard/*"
       ],
