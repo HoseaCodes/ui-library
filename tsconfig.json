@@ -1,0 +1,60 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "types": [
+      "node"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/lib/utils": [
+        "typecheck/utils.ts"
+      ],
+      "@/components/ui/button": [
+        "typecheck/shadcn.d.ts"
+      ],
+      "@/components/ui/dropdown-menu": [
+        "typecheck/shadcn.d.ts"
+      ],
+      "@/components/ui/input": [
+        "typecheck/shadcn.d.ts"
+      ],
+      "@/components/ui/label": [
+        "typecheck/shadcn.d.ts"
+      ],
+      "@/components/ui/textarea": [
+        "typecheck/shadcn.d.ts"
+      ],
+      "@/components/ui/accordion": [
+        "typecheck/shadcn.d.ts"
+      ],
+      "@/components/ui/*": [
+        "registry/uiheat/ui/*"
+      ],
+      "@/components/landing/*": [
+        "registry/uiheat/blocks/landing/*"
+      ],
+      "@/components/*": [
+        "registry/uiheat/components/*"
+      ],
+      "@/lib/*": [
+        "registry/uiheat/lib/*"
+      ]
+    }
+  },
+  "include": [
+    "registry/**/*.ts",
+    "registry/**/*.tsx",
+    "typecheck/**/*"
+  ]
+}

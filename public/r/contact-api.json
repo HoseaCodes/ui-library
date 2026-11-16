@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "contact-api",
+  "title": "Contact API route",
+  "description": "Next.js POST /api/contact that validates, drops honeypot spam, escapes input and emails via any SMTP provider.",
+  "dependencies": [
+    "nodemailer"
+  ],
+  "devDependencies": [
+    "@types/nodemailer"
+  ],
+  "registryDependencies": [
+    "@uiheat/logger"
+  ],
+  "files": [
+    {
+      "path": "registry/uiheat/blocks/landing/contact-route.ts",
+      "content": "import { NextResponse } from \"next/server\";\nimport nodemailer from \"nodemailer\";\n\nimport { Logger } from \"@/lib/logger\";\n\n/**\n * POST /api/contact, the backend for <LandingContact />.\n *\n * Env (any SMTP provider: Gmail app password, Resend, Postmark, SES…):\n *   SMTP_HOST, SMTP_PORT (default 465), SMTP_USER, SMTP_PASS\n *   CONTACT_TO      inbox that receives messages\n *   CONTACT_FROM    optional, defaults to SMTP_USER\n *   SITE_NAME       optional, used in the subject line\n */\n\nconst logger = new Logger(\"contact\");\n\nconst MAX = { name: 200, email: 320, phone: 40, topic: 200, message: 5000 };\n\nfunction escapeHtml(value: string) {\n  return value.replace(/[&<>\"']/g, (c) => `&#${c.charCodeAt(0)};`);\n}\n\nfunction clean(value: unknown, max: number) {\n  return typeof value === \"string\" ? value.trim().slice(0, max) : \"\";\n}\n\nexport async function POST(req: Request) {\n  let body: Record<string, unknown>;\n  try {\n    body = await req.json();\n  } catch {\n    return NextResponse.json({ error: \"Invalid JSON.\" }, { status: 400 });\n  }\n\n  // Honeypot filled in: pretend success so the bot moves on.\n  if (clean(body.company, 200)) {\n    logger.warn(\"Dropped submission that filled the honeypot\");\n    return NextResponse.json({ ok: true });\n  }\n\n  const fields = {\n    name: clean(body.name, MAX.name),\n    email: clean(body.email, MAX.email),\n    phone: clean(body.phone, MAX.phone),\n    topic: clean(body.topic, MAX.topic),\n    message: clean(body.message, MAX.message),\n  };\n\n  if (!fields.name || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(fields.email)) {\n    return NextResponse.json({ error: \"Name and a valid email are required.\" }, { status: 400 });\n  }\n\n  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, CONTACT_TO, CONTACT_FROM, SITE_NAME } =\n    process.env;\n  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS || !CONTACT_TO) {\n    logger.error(\"Contact form is not configured: set SMTP_HOST, SMTP_USER, SMTP_PASS, CONTACT_TO\");\n    return NextResponse.json({ error: \"Contact form is not configured.\" }, { status: 500 });\n  }\n\n  const port = Number(SMTP_PORT ?? 465);\n  const transporter = nodemailer.createTransport({\n    host: SMTP_HOST,\n    port,\n    secure: port === 465,\n    auth: { user: SMTP_USER, pass: SMTP_PASS },\n  });\n\n  const rows = Object.entries(fields)\n    .filter(([, v]) => v)\n    .map(\n      ([k, v]) =>\n        `<tr><td style=\"padding:8px 12px 8px 0;color:#555;vertical-align:top\"><strong>${k}</strong></td>` +\n        `<td style=\"padding:8px 0;color:#111;white-space:pre-wrap\">${escapeHtml(v)}</td></tr>`,\n    )\n    .join(\"\");\n\n  try {\n    await transporter.sendMail({\n      from: CONTACT_FROM ?? SMTP_USER,\n      to: CONTACT_TO,\n      replyTo: fields.email,\n      subject: `${SITE_NAME ? `[${SITE_NAME}] ` : \"\"}New message from ${fields.name}`.replace(/[\\r\\n]+/g, \" \"),\n      text: Object.entries(fields)\n        .filter(([, v]) => v)\n        .map(([k, v]) => `${k}: ${v}`)\n        .join(\"\\n\"),\n      html: `<div style=\"font-family:sans-serif;max-width:560px\"><table>${rows}</table></div>`,\n    });\n  } catch (err) {\n    logger.error(\"Failed to send contact email\", err);\n    return NextResponse.json({ error: \"Could not send message.\" }, { status: 502 });\n  }\n\n  logger.info(\"Contact message sent\", { topic: fields.topic || undefined });\n  return NextResponse.json({ ok: true });\n}\n",
+      "type": "registry:file",
+      "target": "app/api/contact/route.ts"
+    }
+  ],
+  "envVars": {
+    "SMTP_HOST": "",
+    "SMTP_PORT": "465",
+    "SMTP_USER": "",
+    "SMTP_PASS": "",
+    "CONTACT_TO": ""
+  },
+  "type": "registry:item"
+}

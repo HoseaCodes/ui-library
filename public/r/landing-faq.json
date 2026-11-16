@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "landing-faq",
+  "title": "Landing: FAQ",
+  "description": "FAQ accordion with a contact link.",
+  "registryDependencies": [
+    "accordion",
+    "@uiheat/landing-section"
+  ],
+  "files": [
+    {
+      "path": "registry/uiheat/blocks/landing/landing-faq.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\n\nimport {\n  Accordion,\n  AccordionContent,\n  AccordionItem,\n  AccordionTrigger,\n} from \"@/components/ui/accordion\";\nimport { Reveal, Section, SectionHeading } from \"@/components/landing/section\";\n\nexport interface Faq {\n  question: string;\n  answer: React.ReactNode;\n}\n\nexport interface LandingFaqProps {\n  id?: string;\n  eyebrow?: string;\n  title?: string;\n  description?: React.ReactNode;\n  faqs: Faq[];\n}\n\nexport function LandingFaq({\n  id = \"faq\",\n  eyebrow = \"FAQ\",\n  title = \"Frequently asked questions\",\n  description = (\n    <>\n      Can&apos;t find what you&apos;re looking for?{\" \"}\n      <a href=\"#contact\" className=\"font-medium text-primary underline-offset-4 hover:underline\">\n        Contact us\n      </a>\n      .\n    </>\n  ),\n  faqs,\n}: LandingFaqProps) {\n  return (\n    <Section id={id} containerClassName=\"max-w-3xl\">\n      <SectionHeading eyebrow={eyebrow} title={title} description={description} />\n      <Reveal>\n        <Accordion type=\"single\" collapsible className=\"w-full\">\n          {faqs.map((faq, i) => (\n            <AccordionItem key={faq.question} value={`item-${i}`}>\n              <AccordionTrigger className=\"text-left text-base\">{faq.question}</AccordionTrigger>\n              <AccordionContent className=\"leading-relaxed text-muted-foreground\">\n                {faq.answer}\n              </AccordionContent>\n            </AccordionItem>\n          ))}\n        </Accordion>\n      </Reveal>\n    </Section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/landing/landing-faq.tsx"
+    }
+  ],
+  "type": "registry:block"
+}

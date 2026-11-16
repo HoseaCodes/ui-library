@@ -1,0 +1,117 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme",
+  "title": "UI Heat theme",
+  "description": "UI Heat red palette as shadcn CSS variables (light + dark), mapped into Tailwind colors.",
+  "tailwind": {
+    "config": {
+      "theme": {
+        "extend": {
+          "colors": {
+            "border": "hsl(var(--border))",
+            "input": "hsl(var(--input))",
+            "ring": "hsl(var(--ring))",
+            "background": "hsl(var(--background))",
+            "foreground": "hsl(var(--foreground))",
+            "primary": {
+              "DEFAULT": "hsl(var(--primary))",
+              "foreground": "hsl(var(--primary-foreground))"
+            },
+            "secondary": {
+              "DEFAULT": "hsl(var(--secondary))",
+              "foreground": "hsl(var(--secondary-foreground))"
+            },
+            "destructive": {
+              "DEFAULT": "hsl(var(--destructive))",
+              "foreground": "hsl(var(--destructive-foreground))"
+            },
+            "muted": {
+              "DEFAULT": "hsl(var(--muted))",
+              "foreground": "hsl(var(--muted-foreground))"
+            },
+            "accent": {
+              "DEFAULT": "hsl(var(--accent))",
+              "foreground": "hsl(var(--accent-foreground))"
+            },
+            "popover": {
+              "DEFAULT": "hsl(var(--popover))",
+              "foreground": "hsl(var(--popover-foreground))"
+            },
+            "card": {
+              "DEFAULT": "hsl(var(--card))",
+              "foreground": "hsl(var(--card-foreground))"
+            },
+            "chart": {
+              "1": "hsl(var(--chart-1))",
+              "2": "hsl(var(--chart-2))",
+              "3": "hsl(var(--chart-3))",
+              "4": "hsl(var(--chart-4))",
+              "5": "hsl(var(--chart-5))"
+            }
+          },
+          "borderRadius": {
+            "lg": "var(--radius)",
+            "md": "calc(var(--radius) - 2px)",
+            "sm": "calc(var(--radius) - 4px)"
+          }
+        }
+      }
+    }
+  },
+  "cssVars": {
+    "light": {
+      "radius": "0.5rem",
+      "background": "0 0% 100%",
+      "foreground": "0 0% 9%",
+      "card": "0 0% 100%",
+      "card-foreground": "0 0% 9%",
+      "popover": "0 0% 100%",
+      "popover-foreground": "0 0% 9%",
+      "primary": "0 78% 59%",
+      "primary-foreground": "0 0% 100%",
+      "secondary": "0 0% 96%",
+      "secondary-foreground": "0 0% 9%",
+      "muted": "0 0% 96%",
+      "muted-foreground": "0 0% 45%",
+      "accent": "0 100% 97%",
+      "accent-foreground": "0 66% 47%",
+      "destructive": "0 66% 47%",
+      "destructive-foreground": "0 0% 100%",
+      "border": "0 0% 90%",
+      "input": "0 0% 90%",
+      "ring": "0 78% 59%",
+      "chart-1": "0 78% 59%",
+      "chart-2": "0 66% 47%",
+      "chart-3": "1 83% 63%",
+      "chart-4": "0 100% 71%",
+      "chart-5": "0 0% 45%"
+    },
+    "dark": {
+      "background": "0 0% 10%",
+      "foreground": "0 0% 98%",
+      "card": "0 0% 12%",
+      "card-foreground": "0 0% 98%",
+      "popover": "0 0% 12%",
+      "popover-foreground": "0 0% 98%",
+      "primary": "0 100% 71%",
+      "primary-foreground": "0 0% 10%",
+      "secondary": "0 0% 17%",
+      "secondary-foreground": "0 0% 98%",
+      "muted": "0 0% 17%",
+      "muted-foreground": "0 0% 64%",
+      "accent": "0 35% 20%",
+      "accent-foreground": "0 100% 71%",
+      "destructive": "1 83% 63%",
+      "destructive-foreground": "0 0% 10%",
+      "border": "0 0% 21%",
+      "input": "0 0% 21%",
+      "ring": "0 100% 71%",
+      "chart-1": "0 100% 71%",
+      "chart-2": "1 83% 63%",
+      "chart-3": "0 78% 59%",
+      "chart-4": "0 66% 47%",
+      "chart-5": "0 0% 64%"
+    }
+  },
+  "type": "registry:theme"
+}

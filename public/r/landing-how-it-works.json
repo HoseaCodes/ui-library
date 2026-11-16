@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "landing-how-it-works",
+  "title": "Landing: how it works",
+  "description": "Numbered steps with icons.",
+  "registryDependencies": [
+    "@uiheat/landing-section"
+  ],
+  "files": [
+    {
+      "path": "registry/uiheat/blocks/landing/landing-how-it-works.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\n\nimport { Reveal, Section, SectionHeading } from \"@/components/landing/section\";\n\nexport interface Step {\n  icon: React.ComponentType<{ className?: string }>;\n  title: string;\n  description: string;\n}\n\nexport interface LandingHowItWorksProps {\n  id?: string;\n  eyebrow?: string;\n  title?: string;\n  description?: string;\n  /** Works best with 3 steps; 2 or 4 also lay out cleanly. */\n  steps: Step[];\n}\n\nexport function LandingHowItWorks({\n  id = \"how-it-works\",\n  eyebrow = \"Simple process\",\n  title = \"How it works\",\n  description,\n  steps,\n}: LandingHowItWorksProps) {\n  const cols =\n    steps.length === 2 ? \"sm:grid-cols-2\" : steps.length >= 4 ? \"sm:grid-cols-2 lg:grid-cols-4\" : \"sm:grid-cols-3\";\n\n  return (\n    <Section id={id} muted>\n      <SectionHeading eyebrow={eyebrow} title={title} description={description} />\n      <ol className={`grid gap-10 ${cols}`}>\n        {steps.map((step, i) => (\n          <li key={step.title}>\n            <Reveal delay={i * 0.15} className=\"flex flex-col items-center text-center\">\n              <div className=\"relative mb-6\">\n                <div className=\"flex h-[72px] w-[72px] items-center justify-center rounded-3xl border-2 bg-background shadow-sm\">\n                  <step.icon className=\"h-7 w-7 text-primary\" />\n                </div>\n                <span className=\"absolute -right-2.5 -top-2.5 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-sm\">\n                  {i + 1}\n                </span>\n              </div>\n              <h3 className=\"mb-2 text-lg font-bold\">{step.title}</h3>\n              <p className=\"max-w-xs text-sm leading-relaxed text-muted-foreground\">\n                {step.description}\n              </p>\n            </Reveal>\n          </li>\n        ))}\n      </ol>\n    </Section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/landing/landing-how-it-works.tsx"
+    }
+  ],
+  "type": "registry:block"
+}

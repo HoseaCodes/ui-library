@@ -1,0 +1,465 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "uiheat",
+  "homepage": "https://github.com/HoseaCodes/ui-library",
+  "items": [
+    {
+      "name": "theme",
+      "type": "registry:theme",
+      "title": "UI Heat theme",
+      "description": "UI Heat red palette as shadcn CSS variables (light + dark), mapped into Tailwind colors.",
+      "tailwind": {
+        "config": {
+          "darkMode": [
+            "class"
+          ],
+          "theme": {
+            "extend": {
+              "colors": {
+                "border": "hsl(var(--border))",
+                "input": "hsl(var(--input))",
+                "ring": "hsl(var(--ring))",
+                "background": "hsl(var(--background))",
+                "foreground": "hsl(var(--foreground))",
+                "primary": {
+                  "DEFAULT": "hsl(var(--primary))",
+                  "foreground": "hsl(var(--primary-foreground))"
+                },
+                "secondary": {
+                  "DEFAULT": "hsl(var(--secondary))",
+                  "foreground": "hsl(var(--secondary-foreground))"
+                },
+                "destructive": {
+                  "DEFAULT": "hsl(var(--destructive))",
+                  "foreground": "hsl(var(--destructive-foreground))"
+                },
+                "muted": {
+                  "DEFAULT": "hsl(var(--muted))",
+                  "foreground": "hsl(var(--muted-foreground))"
+                },
+                "accent": {
+                  "DEFAULT": "hsl(var(--accent))",
+                  "foreground": "hsl(var(--accent-foreground))"
+                },
+                "popover": {
+                  "DEFAULT": "hsl(var(--popover))",
+                  "foreground": "hsl(var(--popover-foreground))"
+                },
+                "card": {
+                  "DEFAULT": "hsl(var(--card))",
+                  "foreground": "hsl(var(--card-foreground))"
+                },
+                "chart": {
+                  "1": "hsl(var(--chart-1))",
+                  "2": "hsl(var(--chart-2))",
+                  "3": "hsl(var(--chart-3))",
+                  "4": "hsl(var(--chart-4))",
+                  "5": "hsl(var(--chart-5))"
+                }
+              },
+              "borderRadius": {
+                "lg": "var(--radius)",
+                "md": "calc(var(--radius) - 2px)",
+                "sm": "calc(var(--radius) - 4px)"
+              }
+            }
+          }
+        }
+      },
+      "cssVars": {
+        "light": {
+          "radius": "0.5rem",
+          "background": "0 0% 100%",
+          "foreground": "0 0% 9%",
+          "card": "0 0% 100%",
+          "card-foreground": "0 0% 9%",
+          "popover": "0 0% 100%",
+          "popover-foreground": "0 0% 9%",
+          "primary": "0 78% 59%",
+          "primary-foreground": "0 0% 100%",
+          "secondary": "0 0% 96%",
+          "secondary-foreground": "0 0% 9%",
+          "muted": "0 0% 96%",
+          "muted-foreground": "0 0% 45%",
+          "accent": "0 100% 97%",
+          "accent-foreground": "0 66% 47%",
+          "destructive": "0 66% 47%",
+          "destructive-foreground": "0 0% 100%",
+          "border": "0 0% 90%",
+          "input": "0 0% 90%",
+          "ring": "0 78% 59%",
+          "chart-1": "0 78% 59%",
+          "chart-2": "0 66% 47%",
+          "chart-3": "1 83% 63%",
+          "chart-4": "0 100% 71%",
+          "chart-5": "0 0% 45%"
+        },
+        "dark": {
+          "background": "0 0% 10%",
+          "foreground": "0 0% 98%",
+          "card": "0 0% 12%",
+          "card-foreground": "0 0% 98%",
+          "popover": "0 0% 12%",
+          "popover-foreground": "0 0% 98%",
+          "primary": "0 100% 71%",
+          "primary-foreground": "0 0% 10%",
+          "secondary": "0 0% 17%",
+          "secondary-foreground": "0 0% 98%",
+          "muted": "0 0% 17%",
+          "muted-foreground": "0 0% 64%",
+          "accent": "0 35% 20%",
+          "accent-foreground": "0 100% 71%",
+          "destructive": "1 83% 63%",
+          "destructive-foreground": "0 0% 10%",
+          "border": "0 0% 21%",
+          "input": "0 0% 21%",
+          "ring": "0 100% 71%",
+          "chart-1": "0 100% 71%",
+          "chart-2": "1 83% 63%",
+          "chart-3": "0 78% 59%",
+          "chart-4": "0 66% 47%",
+          "chart-5": "0 0% 64%"
+        }
+      }
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Accessible loading spinner with size variants.",
+      "dependencies": [
+        "lucide-react",
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "image-dropzone",
+      "type": "registry:ui",
+      "title": "Image dropzone",
+      "description": "Single image upload with drag and drop, preview, remove and validation messages.",
+      "dependencies": [
+        "react-dropzone",
+        "lucide-react",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@uiheat/spinner"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/ui/image-dropzone.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "theme-provider",
+      "type": "registry:component",
+      "title": "Theme provider",
+      "description": "next-themes provider for light, dark and system mode.",
+      "dependencies": [
+        "next-themes"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/components/theme-provider.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "mode-toggle",
+      "type": "registry:component",
+      "title": "Mode toggle",
+      "description": "Light / dark / system dropdown. Needs theme-provider in the root layout.",
+      "dependencies": [
+        "next-themes",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "dropdown-menu",
+        "@uiheat/theme-provider"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/components/mode-toggle.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "mongodb",
+      "type": "registry:lib",
+      "title": "MongoDB client",
+      "description": "Cached MongoClient for Next.js with a bounded pool and getDb() helper.",
+      "dependencies": [
+        "mongodb"
+      ],
+      "envVars": {
+        "MONGODB_URI": "",
+        "MONGODB_DB": ""
+      },
+      "files": [
+        {
+          "path": "registry/uiheat/lib/mongodb.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "logger",
+      "type": "registry:lib",
+      "title": "Logger",
+      "description": "Dependency-free structured logger that works on serverless. Same API as the old CustomLogger.",
+      "files": [
+        {
+          "path": "registry/uiheat/lib/logger.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "starter",
+      "type": "registry:item",
+      "title": "UI Heat starter",
+      "description": "Theme plus the components every project ends up needing. Run this first in a new app.",
+      "registryDependencies": [
+        "@uiheat/theme",
+        "button",
+        "card",
+        "input",
+        "label",
+        "textarea",
+        "select",
+        "badge",
+        "skeleton",
+        "tooltip",
+        "dialog",
+        "dropdown-menu",
+        "tabs",
+        "avatar",
+        "sonner",
+        "@uiheat/spinner",
+        "@uiheat/mode-toggle"
+      ]
+    },
+    {
+      "name": "landing-section",
+      "type": "registry:component",
+      "title": "Landing: section helpers",
+      "description": "Section wrapper, heading and scroll-reveal used by all landing blocks.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/section.tsx",
+          "type": "registry:component",
+          "target": "components/landing/section.tsx"
+        },
+        {
+          "path": "registry/uiheat/blocks/landing/types.ts",
+          "type": "registry:component",
+          "target": "components/landing/types.ts"
+        }
+      ]
+    },
+    {
+      "name": "landing-header",
+      "type": "registry:block",
+      "title": "Landing: header",
+      "description": "Fixed header with logo, nav links, CTA and animated mobile menu.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-header.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-header.tsx"
+        }
+      ]
+    },
+    {
+      "name": "landing-hero",
+      "type": "registry:block",
+      "title": "Landing: hero",
+      "description": "Hero with badge, highlighted title, selling points, two CTAs and optional image with floating cards.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-hero.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-hero.tsx"
+        }
+      ]
+    },
+    {
+      "name": "landing-how-it-works",
+      "type": "registry:block",
+      "title": "Landing: how it works",
+      "description": "Numbered steps with icons.",
+      "registryDependencies": [
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-how-it-works.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-how-it-works.tsx"
+        }
+      ]
+    },
+    {
+      "name": "landing-testimonials",
+      "type": "registry:block",
+      "title": "Landing: testimonials",
+      "description": "Review cards with half-star ratings, initials avatars and a summary row.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-testimonials.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-testimonials.tsx"
+        }
+      ]
+    },
+    {
+      "name": "landing-faq",
+      "type": "registry:block",
+      "title": "Landing: FAQ",
+      "description": "FAQ accordion with a contact link.",
+      "registryDependencies": [
+        "accordion",
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-faq.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-faq.tsx"
+        }
+      ]
+    },
+    {
+      "name": "landing-contact",
+      "type": "registry:block",
+      "title": "Landing: contact form",
+      "description": "Contact form with optional phone/topic fields, honeypot, success state. Posts to /api/contact by default.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "label",
+        "textarea",
+        "@uiheat/spinner",
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-contact.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-contact.tsx"
+        }
+      ]
+    },
+    {
+      "name": "contact-api",
+      "type": "registry:item",
+      "title": "Contact API route",
+      "description": "Next.js POST /api/contact that validates, drops honeypot spam, escapes input and emails via any SMTP provider.",
+      "dependencies": [
+        "nodemailer"
+      ],
+      "devDependencies": [
+        "@types/nodemailer"
+      ],
+      "registryDependencies": [
+        "@uiheat/logger"
+      ],
+      "envVars": {
+        "SMTP_HOST": "",
+        "SMTP_PORT": "465",
+        "SMTP_USER": "",
+        "SMTP_PASS": "",
+        "CONTACT_TO": ""
+      },
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/contact-route.ts",
+          "type": "registry:file",
+          "target": "app/api/contact/route.ts"
+        }
+      ]
+    },
+    {
+      "name": "landing-footer",
+      "type": "registry:block",
+      "title": "Landing: footer",
+      "description": "Footer with brand, contact list, link columns and copyright bar.",
+      "registryDependencies": [
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-footer.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-footer.tsx"
+        }
+      ]
+    },
+    {
+      "name": "landing-page",
+      "type": "registry:block",
+      "title": "Landing page",
+      "description": "Every landing block plus the contact API and an example page wiring them together with placeholder copy.",
+      "registryDependencies": [
+        "@uiheat/landing-header",
+        "@uiheat/landing-hero",
+        "@uiheat/landing-how-it-works",
+        "@uiheat/landing-testimonials",
+        "@uiheat/landing-faq",
+        "@uiheat/landing-contact",
+        "@uiheat/landing-footer",
+        "@uiheat/contact-api"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-example.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-example.tsx"
+        }
+      ]
+    }
+  ]
+}
