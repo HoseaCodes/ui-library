@@ -6,9 +6,7 @@
     "typecheck": "tsc -p .",
     "check": "npm run typecheck && npm run build",
     "serve": "npx --yes serve@14.2.4 public -l 4000 --cors",
-    "cli:pack": "npm pack ./cli --dry-run",
-    "cli:whoami": "set -a && . ./.env && set +a && export NPM_CONFIG_USERCONFIG=.npmrc.publish && npm whoami",
-    "cli:publish": "set -a && . ./.env && set +a && export NPM_CONFIG_USERCONFIG=.npmrc.publish && npm whoami && npm publish ./cli"
+    "cli:pack": "npm pack ./cli --dry-run"
   },
   "devDependencies": {
     "@types/node": "^20.19.43",

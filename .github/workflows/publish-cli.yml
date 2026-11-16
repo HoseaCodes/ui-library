@@ -1,0 +1,66 @@
+# Publishes the uiheat CLI (cli/) to npm using trusted publishing (OIDC):
+# no npm token or 2FA code involved. npm verifies the publish came from this
+# workflow in HoseaCodes/ui-library.
+#
+# Release: bump "version" in cli/package.json, commit, then
+#   git tag cli-v<version> && git push origin cli-v<version>
+#
+# One-time setup on npmjs.com: uiheat → Settings → Trusted Publisher →
+# GitHub Actions, user HoseaCodes, repo ui-library, workflow publish-cli.yml,
+# with "npm publish" allowed.
+
+name: Publish CLI
+
+on:
+  push:
+    tags: ["cli-v*"]
+  workflow_dispatch:
+
+permissions:
+  id-token: write # lets GitHub mint the OIDC token npm checks
+  contents: read
+
+concurrency:
+  group: publish-cli
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cli
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+
+      - name: Check versions
+        id: version
+        run: |
+          echo "node $(node --version), npm $(npm --version)"
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if [[ "$GITHUB_REF_TYPE" == "tag" && "$GITHUB_REF_NAME" != "cli-v$VERSION" ]]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match cli/package.json version $VERSION (expected cli-v$VERSION)"
+            exit 1
+          fi
+          if [[ "$(npm view "uiheat@$VERSION" version 2>/dev/null)" == "$VERSION" ]]; then
+            echo "::notice::uiheat@$VERSION is already on npm; nothing to publish."
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Smoke test
+        if: steps.version.outputs.published != 'true'
+        run: |
+          npm install --no-save --ignore-scripts --no-audit --no-fund
+          node bin/uiheat.js --version
+          node bin/uiheat.js list
+
+      - name: Publish
+        if: steps.version.outputs.published != 'true'
+        run: npm publish

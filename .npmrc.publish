@@ -1,2 +1,0 @@
-# Used only by `npm run cli:publish`. Holds no secret: npm reads NPM_TOKEN from the environment.
-//registry.npmjs.org/:_authToken=${NPM_TOKEN}
