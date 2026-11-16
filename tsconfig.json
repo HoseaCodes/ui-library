@@ -80,5 +80,8 @@
     "registry/**/*.ts",
     "registry/**/*.tsx",
     "typecheck/**/*"
+  ],
+  "exclude": [
+    "registry/uiheat/native/**"
   ]
 }

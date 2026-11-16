@@ -3,7 +3,7 @@
 // registry, so `npx uiheat add landing-hero` works in any project.
 
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -137,12 +137,42 @@ export function cn(...inputs: ClassValue[]) {
  * components.json from what's on disk and makes sure a cn() helper exists.
  * Never overwrites existing files; only appends cn() when it's missing.
  */
+function readDeps(cwd) {
+  const { dependencies = {}, devDependencies = {} } = JSON.parse(readFileSync(path.join(cwd, "package.json"), "utf8"));
+  return { ...dependencies, ...devDependencies };
+}
+
+const isExpo = (cwd) => Boolean(readDeps(cwd).expo);
+
 function ensureProjectConfig(cwd) {
   if (ensureRegistry(cwd)) return;
 
   const has = (p) => existsSync(path.join(cwd, p));
   const src = has("src") ? "src/" : "";
   const tsx = has("tsconfig.json");
+
+  if (isExpo(cwd)) {
+    // React Native has no global stylesheet or Tailwind config to wire up; the
+    // native items style themselves. components.json just tells shadcn where files go.
+    const config = {
+      $schema: "https://ui.shadcn.com/schema.json",
+      style: "new-york",
+      rsc: false,
+      tsx,
+      tailwind: { config: "", css: "", baseColor: "neutral", cssVariables: false, prefix: "" },
+      aliases: {
+        components: "@/components",
+        utils: "@/lib/utils",
+        ui: "@/components/ui",
+        lib: "@/lib",
+        hooks: "@/hooks",
+      },
+      registries: { [NAMESPACE]: REGISTRY_URL },
+    };
+    writeFileSync(path.join(cwd, "components.json"), JSON.stringify(config, null, 2) + "\n");
+    info("Created components.json for an Expo project");
+    return;
+  }
   const tailwindConfig =
     ["tailwind.config.ts", "tailwind.config.js", "tailwind.config.mjs", "tailwind.config.cjs"].find(has) ?? "";
   const css = [
@@ -159,8 +189,7 @@ function ensureProjectConfig(cwd) {
     );
   }
 
-  const { dependencies = {}, devDependencies = {} } = JSON.parse(readFileSync(path.join(cwd, "package.json"), "utf8"));
-  const deps = { ...dependencies, ...devDependencies };
+  const deps = readDeps(cwd);
   const rsc = Boolean(deps.next) && has(`${src}app`);
 
   const config = {
@@ -192,6 +221,7 @@ function ensureProjectConfig(cwd) {
   const utils = [`${src}lib/utils.ts`, `${src}lib/utils.js`].find(has);
   const helper = tsx ? CN_HELPER : CN_HELPER.replace(", type ClassValue", "").replace("...inputs: ClassValue[]", "...inputs");
   if (!utils) {
+    mkdirSync(path.join(cwd, `${src}lib`), { recursive: true });
     writeFileSync(path.join(cwd, `${src}lib/utils.${ext}`), helper, { flag: "wx" });
     info(`Created ${src}lib/utils.${ext} with cn()`);
   } else if (!/export\s+(function|const)\s+cn\b/.test(readFileSync(path.join(cwd, utils), "utf8"))) {
@@ -252,6 +282,18 @@ async function cmdAdd({ positional, passthrough, cwd }) {
   if (needsTheme && !items.includes(`${NAMESPACE}/theme`)) items.unshift(`${NAMESPACE}/theme`);
 
   shadcn(["add", ...items, ...passthrough], cwd);
+
+  if (isExpo(cwd)) {
+    // shadcn installs the latest version of each dependency; native modules
+    // (e.g. AsyncStorage) must match the project's Expo SDK instead.
+    info("Aligning native package versions with your Expo SDK (expo install --fix)");
+    const result = spawnSync("npx", ["--yes", "expo", "install", "--fix"], {
+      cwd,
+      stdio: "inherit",
+      shell: process.platform === "win32",
+    });
+    if (result.status !== 0) info('Could not run "npx expo install --fix"; run it yourself to align versions.');
+  }
 }
 
 async function cmdInit({ cwd }) {

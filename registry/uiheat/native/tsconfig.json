@@ -1,0 +1,4 @@
+{
+  "extends": "../../../tsconfig.native.json",
+  "include": ["./**/*", "../../../typecheck/expo-router.d.ts"]
+}

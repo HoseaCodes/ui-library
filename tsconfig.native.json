@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["es2022"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "types": ["react-native", "node"],
+    "baseUrl": ".",
+    "paths": {
+      "@/lib/firebase": ["registry/uiheat/native/firebase.ts"],
+      "@/lib/theme": ["registry/uiheat/native/theme.ts"],
+      "@/components/auth/*": ["registry/uiheat/native/*"]
+    }
+  },
+  "include": ["registry/uiheat/native/**/*", "typecheck/expo-router.d.ts"]
+}

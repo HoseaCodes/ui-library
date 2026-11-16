@@ -638,6 +638,105 @@
           "target": "app/reset-password/page.tsx"
         }
       ]
+    },
+    {
+      "name": "theme-native",
+      "type": "registry:lib",
+      "title": "Theme (React Native)",
+      "description": "UI Heat palette for React Native with a useTheme() hook that follows light/dark mode.",
+      "files": [
+        {
+          "path": "registry/uiheat/native/theme.ts",
+          "type": "registry:lib",
+          "target": "lib/theme.ts"
+        }
+      ]
+    },
+    {
+      "name": "firebase-native",
+      "type": "registry:lib",
+      "title": "Firebase client (Expo)",
+      "description": "Firebase JS SDK for Expo: sign-ins persist via AsyncStorage, safe across fast refresh, web-compatible, EXPO_PUBLIC_FIREBASE_* config, emulator support.",
+      "dependencies": [
+        "firebase",
+        "@react-native-async-storage/async-storage"
+      ],
+      "envVars": {
+        "EXPO_PUBLIC_FIREBASE_API_KEY": "",
+        "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN": "",
+        "EXPO_PUBLIC_FIREBASE_PROJECT_ID": "",
+        "EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET": "",
+        "EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "",
+        "EXPO_PUBLIC_FIREBASE_APP_ID": ""
+      },
+      "files": [
+        {
+          "path": "registry/uiheat/native/firebase.ts",
+          "type": "registry:lib",
+          "target": "lib/firebase.ts"
+        }
+      ]
+    },
+    {
+      "name": "firebase-auth-native",
+      "type": "registry:block",
+      "title": "Firebase auth (Expo)",
+      "description": "AuthProvider + useAuth() for Expo (email/password, reset, sign out) with friendly errors and optional users/{uid} profile, plus an Expo Router useProtectedRoute() guard.",
+      "dependencies": [
+        "firebase"
+      ],
+      "registryDependencies": [
+        "@uiheat/firebase-native"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/native/auth-provider.tsx",
+          "type": "registry:component",
+          "target": "components/auth/auth-provider.tsx"
+        },
+        {
+          "path": "registry/uiheat/native/use-protected-route.ts",
+          "type": "registry:component",
+          "target": "components/auth/use-protected-route.ts"
+        }
+      ]
+    },
+    {
+      "name": "auth-screens-native",
+      "type": "registry:block",
+      "title": "Auth screens (Expo)",
+      "description": "Themed sign in / sign up / reset password screen, plus Expo Router routes in app/(auth). Works with React Navigation via callbacks.",
+      "registryDependencies": [
+        "@uiheat/firebase-auth-native",
+        "@uiheat/theme-native"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/native/auth-screen.tsx",
+          "type": "registry:component",
+          "target": "components/auth/auth-screen.tsx"
+        },
+        {
+          "path": "registry/uiheat/native/auth-layout.tsx",
+          "type": "registry:file",
+          "target": "app/(auth)/_layout.tsx"
+        },
+        {
+          "path": "registry/uiheat/native/screen-login.tsx",
+          "type": "registry:file",
+          "target": "app/(auth)/login.tsx"
+        },
+        {
+          "path": "registry/uiheat/native/screen-signup.tsx",
+          "type": "registry:file",
+          "target": "app/(auth)/signup.tsx"
+        },
+        {
+          "path": "registry/uiheat/native/screen-reset-password.tsx",
+          "type": "registry:file",
+          "target": "app/(auth)/reset-password.tsx"
+        }
+      ]
     }
   ]
 }

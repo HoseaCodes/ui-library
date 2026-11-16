@@ -61,6 +61,41 @@ Local development without touching production: run
 `npx firebase-tools emulators:start --only auth,firestore --project demo-<name>`
 and set `NEXT_PUBLIC_FIREBASE_EMULATOR_HOST=127.0.0.1`.
 
+### Firebase auth (Expo / React Native)
+
+| Item | What you get |
+|---|---|
+| `@uiheat/auth-screens-native` | Themed sign in / sign up / reset password screen (`AuthScreen`), plus Expo Router routes in `app/(auth)/` |
+| `@uiheat/firebase-auth-native` | `AuthProvider`, `useAuth()` (`signIn`, `signUp`, `resetPassword`, `signOut`), `useProtectedRoute()` guard for Expo Router, optional `users/{uid}` profile |
+| `@uiheat/firebase-native` | `lib/firebase.ts`: Firebase JS SDK with sign-ins kept across restarts (AsyncStorage), safe across fast refresh, works on web, config from `EXPO_PUBLIC_FIREBASE_*`, emulator support |
+| `@uiheat/theme-native` | `lib/theme.ts`: the UI Heat palette and `useTheme()`, which follows light/dark mode |
+
+```bash
+npx uiheat add auth-screens-native   # pulls in firebase-auth-native, firebase-native, theme-native
+```
+
+The CLI detects Expo, writes a `components.json` without CSS or Tailwind settings,
+and runs `expo install --fix` afterwards so native packages match your Expo SDK.
+
+1. Fill the `EXPO_PUBLIC_FIREBASE_*` values in `.env` (Firebase console → Project
+   settings → Your apps → Web app). A build without them fails loudly in dev.
+2. In your root `app/_layout.tsx`, wrap the app in `<AuthProvider>` and call
+   `useProtectedRoute()` inside it. Signed-out users go to `/login`, signed-in
+   users on an auth screen go to `/`. It returns `true` while the session loads,
+   so you can keep the splash screen up.
+3. Using React Navigation instead? Render `AuthScreen` yourself and pass
+   `onSwitchMode` and `onSuccess`.
+
+Email/password only for now (no Google/GitHub). The same Security Rules advice as
+the web version applies. For the emulator, set `EXPO_PUBLIC_FIREBASE_EMULATOR_HOST`
+to your computer's LAN IP (a phone), `10.0.2.2` (Android emulator) or `127.0.0.1`
+(iOS simulator / web).
+
+Building for web with `"web": { "output": "server" }` or `"static"` in `app.json`?
+Expo renders pages in Node, which imports `lib/firebase.ts`, so the
+`EXPO_PUBLIC_FIREBASE_*` values must be set when you run `expo export` **and**
+wherever the server runs. Without them every page returns a 500.
+
 ### Landing page blocks
 
 | Item | What you get |
@@ -143,11 +178,13 @@ export function cn(...inputs: ClassValue[]) { return twMerge(clsx(inputs)); }
 
 ```bash
 npm install
-npm run check   # type-check sources, then build public/r/*.json
+npm run check   # type-check web and native sources, then build public/r/*.json
 npm run serve   # serve at http://localhost:4000/r/{name}.json for local testing
 ```
 
-- Sources live in `registry/uiheat/{ui,components,lib,blocks}/`; `registry.json` lists them.
+- Sources live in `registry/uiheat/{ui,components,lib,blocks,native}/`; `registry.json` lists them.
+- `native/` is type-checked separately with `tsconfig.native.json` (React Native
+  types), and excluded from the main `tsconfig.json`.
 - `public/r/` is the build output **and** what gets served, so commit it.
 - Items import stock shadcn pieces as `@/components/ui/button` etc. and list
   them in `registryDependencies`; reference other UI Heat items as `@uiheat/<name>`.
@@ -162,8 +199,4 @@ and install it into one real project before relying on it.
 
 ### Next candidates
 
-From a scan of `~/dev/gitviews`, in rough order of payoff:
-
-- Expo / React Native: Firebase auth context and login/sign-up screens
-  (`spanish101`, `SpanishFluencyApp`, `wingman2`, `ZenScreen`, `KidsverCity`).
-  Needs the CLI to support projects without global CSS first.
+- Google / GitHub sign-in for the native auth items.

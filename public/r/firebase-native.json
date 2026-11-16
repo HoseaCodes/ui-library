@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "firebase-native",
+  "title": "Firebase client (Expo)",
+  "description": "Firebase JS SDK for Expo: sign-ins persist via AsyncStorage, safe across fast refresh, web-compatible, EXPO_PUBLIC_FIREBASE_* config, emulator support.",
+  "dependencies": [
+    "firebase",
+    "@react-native-async-storage/async-storage"
+  ],
+  "files": [
+    {
+      "path": "registry/uiheat/native/firebase.ts",
+      "content": "import { Platform } from \"react-native\";\nimport AsyncStorage from \"@react-native-async-storage/async-storage\";\nimport { getApp, getApps, initializeApp, type FirebaseOptions } from \"firebase/app\";\nimport * as FirebaseAuth from \"firebase/auth\";\nimport { connectFirestoreEmulator, getFirestore } from \"firebase/firestore\";\nimport { getStorage } from \"firebase/storage\";\n\n/**\n * Firebase for Expo / React Native, using the Firebase JS SDK.\n *\n * Env (Firebase console → Project settings → Your apps → Web app). Expo inlines\n * EXPO_PUBLIC_ vars at build time; they're public identifiers, not secrets.\n *   EXPO_PUBLIC_FIREBASE_API_KEY, EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,\n *   EXPO_PUBLIC_FIREBASE_PROJECT_ID, EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,\n *   EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID, EXPO_PUBLIC_FIREBASE_APP_ID\n */\nconst config: FirebaseOptions = {\n  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,\n  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,\n  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,\n  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,\n  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,\n  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,\n};\n\nif (!config.apiKey || !config.projectId) {\n  // No silent \"demo mode\": a build without config should fail loudly, not let anyone in.\n  const message =\n    \"Firebase is not configured: set EXPO_PUBLIC_FIREBASE_API_KEY and EXPO_PUBLIC_FIREBASE_PROJECT_ID (see lib/firebase.ts).\";\n  if (__DEV__) throw new Error(message);\n  console.error(message);\n}\n\nconst firstInit = getApps().length === 0;\nexport const app = firstInit ? initializeApp(config) : getApp();\n\n// getReactNativePersistence only exists in the React Native build of\n// firebase/auth (Metro picks it), and it's missing from the TypeScript types.\nconst { getReactNativePersistence } = FirebaseAuth as unknown as {\n  getReactNativePersistence?: (storage: typeof AsyncStorage) => FirebaseAuth.Persistence;\n};\n\nfunction createAuth(): FirebaseAuth.Auth {\n  // Web uses the browser's own persistence. After a fast refresh the instance\n  // already exists, and initializeAuth would throw auth/already-initialized.\n  if (Platform.OS === \"web\" || !firstInit) return FirebaseAuth.getAuth(app);\n  if (!getReactNativePersistence) {\n    console.warn(\"firebase/auth React Native build not found; sign-ins won't survive app restarts.\");\n    return FirebaseAuth.getAuth(app);\n  }\n  return FirebaseAuth.initializeAuth(app, { persistence: getReactNativePersistence(AsyncStorage) });\n}\n\n/** Keeps people signed in across app restarts (AsyncStorage on device). */\nexport const auth = createAuth();\nexport const db = getFirestore(app);\n\n/** Storage is loaded on first use so apps that don't need it don't pay for it. */\nexport const storage = () => getStorage(app);\n\n/**\n * Local development against the Firebase Emulator Suite: set\n * EXPO_PUBLIC_FIREBASE_EMULATOR_HOST to your computer's LAN IP (a phone),\n * 10.0.2.2 (Android emulator) or 127.0.0.1 (iOS simulator / web).\n */\nconst emulatorHost = process.env.EXPO_PUBLIC_FIREBASE_EMULATOR_HOST;\nconst flags = globalThis as typeof globalThis & { __firebaseEmulators?: boolean };\nif (emulatorHost && !flags.__firebaseEmulators) {\n  flags.__firebaseEmulators = true;\n  FirebaseAuth.connectAuthEmulator(auth, `http://${emulatorHost}:9099`, { disableWarnings: true });\n  connectFirestoreEmulator(db, emulatorHost, 8080);\n}\n",
+      "type": "registry:lib",
+      "target": "lib/firebase.ts"
+    }
+  ],
+  "envVars": {
+    "EXPO_PUBLIC_FIREBASE_API_KEY": "",
+    "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN": "",
+    "EXPO_PUBLIC_FIREBASE_PROJECT_ID": "",
+    "EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET": "",
+    "EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "",
+    "EXPO_PUBLIC_FIREBASE_APP_ID": ""
+  },
+  "type": "registry:lib"
+}

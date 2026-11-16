@@ -33,6 +33,8 @@ passed through to shadcn, and `-c <dir>` runs against another directory.
   `landing-contact`, `landing-footer`, `contact-api`
 - **Dashboard:** `dashboard` (shell + example layout), or just `dashboard-shell`
 - **Auth (Firebase):** `auth-pages` (login/sign-up/reset pages), `firebase-auth`, `firebase`
+- **Auth (Expo / React Native):** `auth-screens-native` (login/sign-up/reset screens),
+  `firebase-auth-native`, `firebase-native`, `theme-native`
 - **Server helpers:** `mongodb`, `logger`
 
 Run `npx uiheat list` for descriptions.
@@ -42,6 +44,9 @@ Run `npx uiheat list` for descriptions.
 - In an existing app that already has its own `components/ui/button.tsx` (or
   similar), skip `starter` and the landing blocks, or the install will stop and
   ask before replacing those files.
+- In an Expo project, `init` writes a `components.json` without CSS or Tailwind
+  settings, and `add` runs `npx expo install --fix` afterwards so native packages
+  match your Expo SDK.
 - Set `UIHEAT_REGISTRY_URL` to point at a different registry, e.g. a local one
   while developing: `http://localhost:4000/r/{name}.json`.
 
