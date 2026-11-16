@@ -1,0 +1,65 @@
+apiVersion: opsatlas.ambitiousconcepts.io/v1
+kind: Service
+metadata:
+  name: ui-heat
+  displayName: UI Heat
+  owner: hoseacodes
+  repository: HoseaCodes/UI-Heat
+  description: >-
+    React component library (buttons, headers, modals, QR codes, newsletter and
+    requirement widgets) bundled with Rollup and published as a package, plus a
+    Docusaurus documentation site deployed to GitHub Pages. Components are
+    developed and previewed in Storybook.
+spec:
+  tier: 3
+  lifecycle: active
+  runtime: static
+  environments:
+    - name: production
+      url: https://docs.uiheat.com
+    - name: development
+      url: http://localhost:6006
+  journeys:
+    - Browse the UI Heat component documentation
+    - Copy a component usage example from the docs site
+    - Install the package and import UI Heat components into a React app
+    - Preview and interact with a component in Storybook while developing
+  dependencies:
+    - name: github-pages
+      kind: external
+
+# Left out, and what it would take to fill in:
+#
+# spec.health.readiness / spec.health.liveness — omitted because they do not
+#   exist. Production is a statically built Docusaurus site served by GitHub
+#   Pages; there is no process of this service's to probe or restart. Adding
+#   paths here would describe an application that is not deployed.
+# spec.observability.serviceName — no OpenTelemetry, RUM or analytics SDK is
+#   wired into either the library or the docs site, so nothing reports under any
+#   name. Needs the service.name an instrumented build would emit.
+# spec.observability.dashboard — needs an https dashboard URL; none exists.
+# spec.operations.slo — nothing in the repo states an availability target or a
+#   measurement window, and both fields are required together once `slo` is
+#   present. Needs an agreed number, not a guessed one.
+# spec.operations.runbook — no runbook exists anywhere in the repo (grepped).
+#   Needs docs/runbook.md or an https URL.
+# spec.operations.contact — needs a chat channel or alias that reaches the owner.
+#
+# Included but worth confirming:
+#
+# spec.environments[production].url — taken from `url: 'https://docs.uiheat.com'`
+#   in docs/docusaurus.config.js. That file still carries the scaffold defaults
+#   organizationName: 'facebook' and projectName: 'docusaurus', so confirm the
+#   custom domain is actually attached to the gh-pages branch before the observer
+#   starts probing it.
+# spec.tier — assumed 3. No paging expectation is stated anywhere in the repo, and
+#   a docs site plus a published package reads as internal best effort. Tier is
+#   required and drives every tier-conditional rule, so correct it if wrong.
+# metadata.name — `ui-heat` follows the repo. Note that package.json names the
+#   package `uiheat` while README.md tells consumers `npm install ui-heat`; those
+#   two disagree, and the slug becomes the metrics prefix.
+# spec.dependencies — github-pages is listed because production availability
+#   depends on it: .github/workflows/deploy.yml publishes to the gh-pages branch
+#   and deploys under the `github-pages` environment. The library's npm
+#   dependencies (qrcode.react, react-color, react) are build-time packages, not
+#   services this calls at runtime, so they are deliberately not listed.

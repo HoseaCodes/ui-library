@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mongodb",
+  "title": "MongoDB client",
+  "description": "Cached MongoClient for Next.js with a bounded pool and getDb() helper.",
+  "dependencies": [
+    "mongodb"
+  ],
+  "files": [
+    {
+      "path": "registry/uiheat/lib/mongodb.ts",
+      "content": "import { MongoClient, type Db } from \"mongodb\";\n\n/**\n * Shared MongoDB client for Next.js (App Router or Pages, Node runtime).\n *\n * Env:\n *   MONGODB_URI        required\n *   MONGODB_DB         database name used by getDb() (default: the one in the URI)\n *   MONGODB_POOL_SIZE  max connections per instance (default 10)\n *\n * Each serverless instance gets its own client, so an unbounded pool multiplies\n * across concurrent invocations and can exhaust a small Atlas tier's limit.\n */\n\nconst uri = process.env.MONGODB_URI;\nif (!uri) {\n  throw new Error(\"MONGODB_URI is not set. Add it to .env.local.\");\n}\n\nconst options = {\n  maxPoolSize: Number(process.env.MONGODB_POOL_SIZE ?? 10),\n};\n\ndeclare global {\n  // eslint-disable-next-line no-var\n  var _mongoClientPromise: Promise<MongoClient> | undefined;\n}\n\nlet clientPromise: Promise<MongoClient>;\n\nif (process.env.NODE_ENV === \"development\") {\n  // Reuse the client across hot reloads so dev doesn't leak connections.\n  if (!global._mongoClientPromise) {\n    global._mongoClientPromise = new MongoClient(uri, options).connect();\n  }\n  clientPromise = global._mongoClientPromise;\n} else {\n  clientPromise = new MongoClient(uri, options).connect();\n}\n\nexport default clientPromise;\n\nexport async function getDb(name = process.env.MONGODB_DB): Promise<Db> {\n  const client = await clientPromise;\n  return client.db(name);\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "envVars": {
+    "MONGODB_URI": "",
+    "MONGODB_DB": ""
+  },
+  "type": "registry:lib"
+}

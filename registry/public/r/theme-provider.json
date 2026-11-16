@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-provider",
+  "title": "Theme provider",
+  "description": "next-themes provider for light, dark and system mode.",
+  "dependencies": [
+    "next-themes"
+  ],
+  "files": [
+    {
+      "path": "registry/uiheat/components/theme-provider.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { ThemeProvider as NextThemesProvider } from \"next-themes\";\n\n/**\n * Wrap your root layout's <body> contents with <ThemeProvider> and add\n * `suppressHydrationWarning` to <html>.\n *\n * Defaults match the UI Heat theme, which keys dark mode off the `.dark`\n * class. Any prop you pass overrides the default.\n */\nexport function ThemeProvider({\n  children,\n  ...props\n}: React.ComponentProps<typeof NextThemesProvider>) {\n  return (\n    <NextThemesProvider\n      attribute=\"class\"\n      defaultTheme=\"system\"\n      enableSystem\n      disableTransitionOnChange\n      {...props}\n    >\n      {children}\n    </NextThemesProvider>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "starter",
+  "title": "UI Heat starter",
+  "description": "Theme plus the components every project ends up needing. Run this first in a new app.",
+  "registryDependencies": [
+    "@uiheat/theme",
+    "button",
+    "card",
+    "input",
+    "label",
+    "textarea",
+    "select",
+    "badge",
+    "skeleton",
+    "tooltip",
+    "dialog",
+    "dropdown-menu",
+    "tabs",
+    "avatar",
+    "sonner",
+    "@uiheat/spinner",
+    "@uiheat/mode-toggle"
+  ],
+  "type": "registry:item"
+}
