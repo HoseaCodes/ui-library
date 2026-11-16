@@ -1,298 +1,89 @@
-# 🔥 UI Heat
+# UI Heat registry
 
-<div align="center">
+A [shadcn registry](https://ui.shadcn.com/docs/registry) of the pieces I keep
+rebuilding across projects. Items install as **source files** into the app, so
+they can be edited per project. No package versions to bump.
 
-![UI Heat Logo](./assets/logo-nobg.png)
+## Items
 
-**A modern, framework-agnostic component library for faster web development**
+| Item | What you get |
+|---|---|
+| `@uiheat/starter` | Button, Card, Input, Label, Textarea, Select, Badge, Skeleton, Tooltip, Dialog, Dropdown Menu, Tabs, Avatar, Sonner (toasts), Spinner, Mode toggle |
+| `@uiheat/theme` | UI Heat red palette, light + dark, as CSS variables (Tailwind 3 and 4) |
+| `@uiheat/spinner` | Loading spinner, `size="sm" | "default" | "md" | "lg"` |
+| `@uiheat/image-dropzone` | Single image upload: drag/drop, preview, remove, size/type errors |
+| `@uiheat/theme-provider` | `next-themes` provider, preconfigured for `.dark` |
+| `@uiheat/mode-toggle` | Light / dark / system dropdown |
+| `@uiheat/mongodb` | Cached `MongoClient` for Next.js + `getDb()`, bounded pool |
+| `@uiheat/logger` | `new Logger("svc").info(msg, data)`: stdout, works on Vercel, `LOG_FORMAT=json` |
 
-[![GitHub last commit](https://img.shields.io/github/last-commit/HoseaCodes/ui-library)](https://github.com/HoseaCodes/ui-library)
-[![GitHub](https://img.shields.io/github/license/HoseaCodes/ui-library)](LICENSE)
-[![npm version](https://badge.fury.io/js/uiheat.svg)](https://www.npmjs.com/package/uiheat)
+## Use it in a project
 
-[🚀 Live Demo](https://uiheat.com) • [📚 Documentation](https://docs.uiheat.com) • [📖 Storybook](https://storybook.uiheat.com)
+**1. Point the project at the registry** in `components.json`:
 
-</div>
-
-## 🎯 Overview
-
-UI Heat is a comprehensive component library ecosystem consisting of:
-
-- **📱 Demo Application** - Interactive showcase and documentation site (this repository root)
-- **📦 Component Library** - Publishable npm package with reusable components (`/packages` directory)
-- **📖 Storybook** - Interactive component documentation and playground
-- **📚 Docusaurus Site** - Comprehensive documentation and guides
-
-Built for developers who value **simplicity**, **performance**, and **flexibility** across React, React Native, and vanilla JavaScript.
-
-## 🏗️ Project Structure
-
-```
-ui-library/
-├── 📱 Demo App (Root)           # React showcase application
-│   ├── src/
-│   │   ├── components/          # Demo app components
-│   │   ├── pages/              # Documentation pages
-│   │   └── api/                # API integration examples
-│   └── package.json            # Demo app dependencies
-│
-└── 📦 Component Library (/packages)
-    ├── src/
-    │   ├── components/         # Reusable UI components
-    │   └── stories/           # Storybook stories
-    ├── docs/                  # Docusaurus documentation
-    ├── rollup.config.js       # Library build configuration
-    └── package.json           # Library package configuration
+```json
+"registries": {
+  "@uiheat": "https://raw.githubusercontent.com/HoseaCodes/ui-library/master/public/r/{name}.json"
+}
 ```
 
-## 🚀 Quick Start
-
-### For Users (Install the Library)
+**2a. New app:**
 
 ```bash
-# Install UI Heat in your project
-npm install ui-heat
-
-# Or with yarn
-yarn add ui-heat
+npx shadcn@latest init -t next -b radix
+# add the registries entry above, then:
+npx shadcn@latest add @uiheat/theme @uiheat/starter
 ```
 
-### For Contributors (Development Setup)
+Name `@uiheat/theme` explicitly. When it only arrives as a dependency of
+`starter`, shadcn won't overwrite the default colors `init` wrote.
+
+Then in `app/layout.tsx` wrap `children` in `<ThemeProvider>` and
+`<TooltipProvider>`, and render `<Toaster />` (from `@/components/ui/sonner`).
+
+**2b. Existing app:** add only what you need, e.g.
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/HoseaCodes/ui-library.git
-cd ui-library
+npx shadcn@latest add @uiheat/image-dropzone @uiheat/logger
+```
 
-# 2. Install demo app dependencies
+Watch for collisions. If the project already has its own
+`components/ui/button.tsx` (or similar) with a different API, **don't** run
+`starter` there: it would replace those files. Existing apps without shadcn
+also need a `cn()` helper in `lib/utils.ts`:
+
+```ts
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+export function cn(...inputs: ClassValue[]) { return twMerge(clsx(inputs)); }
+```
+
+## Working on the registry
+
+```bash
 npm install
-
-# 3. Install library dependencies
-cd packages && npm install && cd ..
-
-# 4. Start the demo application
-npm start
+npm run check   # type-check sources, then build public/r/*.json
+npm run serve   # serve at http://localhost:4000/r/{name}.json for local testing
 ```
 
-The demo app will open at [http://localhost:3000](http://localhost:3000)
+- Sources live in `registry/uiheat/{ui,components,lib}/`; `registry.json` lists them.
+- `public/r/` is the build output **and** what gets served, so commit it.
+- Items import stock shadcn pieces as `@/components/ui/button` etc. and list
+  them in `registryDependencies`; reference other UI Heat items as `@uiheat/<name>`.
+- `typecheck/` holds stand-ins so `tsc` can check sources here. It isn't published.
 
-## 📚 Usage Examples
+### Adding something new
 
-### React Application
+Only add code that has already shown up in two or more projects. Take the best
+existing copy, make it work in isolation (no app-specific imports, cookie
+names, env vars without defaults), add it to `registry.json`, run `npm run check`,
+and install it into one real project before relying on it.
 
-```jsx
-import React from 'react';
-import { Button, Card } from 'ui-heat';
+### Next candidates
 
-function App() {
-  return (
-    <Card>
-      <h2>Welcome to UI Heat</h2>
-      <Button variant="primary" size="large">
-        Get Started
-      </Button>
-    </Card>
-  );
-}
+From a scan of `~/dev/gitviews`, in rough order of payoff:
 
-export default App;
-```
-
-### React Native Application
-
-```jsx
-import React from 'react';
-import { Button } from 'ui-heat/native';
-
-export default function App() {
-  return (
-    <Button 
-      variant="primary"
-      title="Click me"
-      onPress={() => alert('Hello from UI Heat!')}
-    />
-  );
-}
-```
-
-### Vanilla JavaScript
-
-```javascript
-import { createButton } from 'ui-heat';
-
-const button = createButton({
-  variant: 'primary',
-  text: 'Click me',
-  onClick: () => console.log('Button clicked!')
-});
-
-document.body.appendChild(button);
-```
-
-## 🧩 Component Overview
-
-UI Heat provides a comprehensive set of components organized by category:
-
-### 🎯 Core Components
-- **Button** - Versatile button component with multiple variants
-- **Card** - Flexible container component for content
-- **Input** - Form input with validation and styling
-- **Modal** - Accessible modal dialogs
-
-### 🧭 Navigation
-- **Navbar** - Responsive navigation bar
-- **Sidebar** - Collapsible sidebar navigation
-- **Breadcrumb** - Navigation breadcrumb trail
-- **Tabs** - Tabbed content interface
-
-### 📊 Data Display
-- **Table** - Feature-rich data tables
-- **List** - Styled list components
-- **Badge** - Status and notification badges
-- **Progress** - Progress bars and indicators
-
-### 📝 Forms
-- **FormGroup** - Form organization and layout
-- **Select** - Dropdown select component
-- **Checkbox** - Styled checkbox inputs
-- **Radio** - Radio button groups
-
-### 🎨 Feedback
-- **Alert** - Contextual feedback messages
-- **Toast** - Temporary notification system
-- **Tooltip** - Contextual help and information
-- **Loading** - Loading states and spinners
-
-> 📖 **[View complete component documentation →](https://docs.uiheat.com/components)**
-
-## 🔧 Development Workflow
-
-### Working with the Demo App
-
-```bash
-# Start demo application
-npm start
-
-# Build demo for production
-npm run build
-
-# Run tests
-npm test
-```
-
-### Working with the Component Library
-
-```bash
-cd packages
-
-# Start Storybook for component development
-npm run storybook
-
-# Build the library for publishing
-npm run build-lib
-
-# Build Storybook for deployment
-npm run build-storybook
-```
-
-### Working with Documentation
-
-```bash
-cd packages/docs
-
-# Start Docusaurus development server
-npm start
-
-# Build documentation site
-npm run build
-```
-
-## 📋 Available Scripts
-
-### Demo App Scripts
-| Script | Description |
-|--------|-------------|
-| `npm start` | Start development server |
-| `npm run build` | Build demo app for production |
-| `npm test` | Run test suite |
-| `npm run eject` | Eject from Create React App |
-
-### Library Scripts (in `/packages`)
-| Script | Description |
-|--------|-------------|
-| `npm run storybook` | Start Storybook development server |
-| `npm run build-storybook` | Build Storybook for deployment |
-| `npm run build-lib` | Build library for npm publishing |
-
-## 🌐 Resources & Links
-
-| Resource | Description | Link |
-|----------|-------------|------|
-| 🚀 **Live Demo** | Interactive showcase and documentation | [uiheat.com](https://uiheat.com) |
-| 📚 **Documentation** | Comprehensive guides and API reference | [docs.uiheat.com](https://docs.uiheat.com) |
-| 📖 **Storybook** | Interactive component playground | [storybook.uiheat.com](https://storybook.uiheat.com) |
-| 📦 **NPM Package** | Install UI Heat in your project | [npmjs.com/package/ui-heat](https://www.npmjs.com/package/ui-heat) |
-| 💻 **GitHub** | Source code and issue tracking | [github.com/HoseaCodes/ui-library](https://github.com/HoseaCodes/ui-library) |
-<!-- | 🐦 **Twitter** | Updates and announcements | [@ui_heat](https://twitter.com/ui_heat) | -->
-
-## 🎨 Theming & Customization
-
-UI Heat supports comprehensive theming through CSS custom properties:
-
-```css
-:root {
-  --ui-primary: #E84545;        /* Primary brand color */
-  --ui-secondary: #FF6B6B;      /* Secondary/accent color */
-  --ui-background: #1a1a1a;     /* Background color */
-  --ui-text: #ffffff;           /* Text color */
-  --ui-radius: 8px;             /* Border radius */
-  --ui-spacing: 1rem;           /* Base spacing unit */
-}
-```
-
-> 🎨 **[Learn more about theming →](https://docs.uiheat.com/theming)**
-
-## 🤝 Contributing
-
-We welcome contributions! Here's how to get started:
-
-1. **Fork the repository**
-2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Make your changes** in the appropriate directory:
-   - Demo app changes: `/src`
-   - Library components: `/packages/src/components`
-   - Documentation: `/packages/docs`
-4. **Add tests** and update documentation
-5. **Commit changes**: `git commit -m 'Add amazing feature'`
-6. **Push to branch**: `git push origin feature/amazing-feature`
-7. **Open a Pull Request**
-
-### Development Guidelines
-
-- **Follow the coding style** defined in `.github/copilot-instructions.md`
-- **Write tests** for new components using React Testing Library
-- **Update Storybook stories** for UI changes
-- **Include accessibility features** (ARIA labels, keyboard navigation)
-- **Test responsive design** on multiple screen sizes
-
-> 🤝 **[Read our full contributing guide →](https://docs.uiheat.com/contributing)**
-
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Built with ❤️ by [Dominique Hosea](https://github.com/HoseaCodes)
-- Inspired by modern design systems and developer experience
-- Community-driven development and feedback
-
----
-
-<div align="center">
-
-**[⭐ Star this repository](https://github.com/HoseaCodes/ui-library) if UI Heat helps you build better interfaces!**
-
-Made with ❤️ for the developer community
-
-</div>
+- Landing sections: Hero, Header, Footer, Testimonials, FAQ, How it works, Contact form
+  (`bronco`, `ai-landingPage`, `writebrain`, `invoicenudge`, `tech_blog`)
+- Dashboard sidebar layout (`ambitious-admin`, `insightlytics`, `invoice`)
+- Firebase init + `AuthContext` (web and Expo; copies have drifted, so reconcile first)
