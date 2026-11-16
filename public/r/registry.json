@@ -252,6 +252,214 @@
         "@uiheat/spinner",
         "@uiheat/mode-toggle"
       ]
+    },
+    {
+      "name": "landing-section",
+      "type": "registry:component",
+      "title": "Landing: section helpers",
+      "description": "Section wrapper, heading and scroll-reveal used by all landing blocks.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/section.tsx",
+          "type": "registry:component",
+          "target": "components/landing/section.tsx"
+        },
+        {
+          "path": "registry/uiheat/blocks/landing/types.ts",
+          "type": "registry:component",
+          "target": "components/landing/types.ts"
+        }
+      ]
+    },
+    {
+      "name": "landing-header",
+      "type": "registry:block",
+      "title": "Landing: header",
+      "description": "Fixed header with logo, nav links, CTA and animated mobile menu.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-header.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-header.tsx"
+        }
+      ]
+    },
+    {
+      "name": "landing-hero",
+      "type": "registry:block",
+      "title": "Landing: hero",
+      "description": "Hero with badge, highlighted title, selling points, two CTAs and optional image with floating cards.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-hero.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-hero.tsx"
+        }
+      ]
+    },
+    {
+      "name": "landing-how-it-works",
+      "type": "registry:block",
+      "title": "Landing: how it works",
+      "description": "Numbered steps with icons.",
+      "registryDependencies": [
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-how-it-works.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-how-it-works.tsx"
+        }
+      ]
+    },
+    {
+      "name": "landing-testimonials",
+      "type": "registry:block",
+      "title": "Landing: testimonials",
+      "description": "Review cards with half-star ratings, initials avatars and a summary row.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-testimonials.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-testimonials.tsx"
+        }
+      ]
+    },
+    {
+      "name": "landing-faq",
+      "type": "registry:block",
+      "title": "Landing: FAQ",
+      "description": "FAQ accordion with a contact link.",
+      "registryDependencies": [
+        "accordion",
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-faq.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-faq.tsx"
+        }
+      ]
+    },
+    {
+      "name": "landing-contact",
+      "type": "registry:block",
+      "title": "Landing: contact form",
+      "description": "Contact form with optional phone/topic fields, honeypot, success state. Posts to /api/contact by default.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "label",
+        "textarea",
+        "@uiheat/spinner",
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-contact.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-contact.tsx"
+        }
+      ]
+    },
+    {
+      "name": "contact-api",
+      "type": "registry:item",
+      "title": "Contact API route",
+      "description": "Next.js POST /api/contact that validates, drops honeypot spam, escapes input and emails via any SMTP provider.",
+      "dependencies": [
+        "nodemailer"
+      ],
+      "devDependencies": [
+        "@types/nodemailer"
+      ],
+      "registryDependencies": [
+        "@uiheat/logger"
+      ],
+      "envVars": {
+        "SMTP_HOST": "",
+        "SMTP_PORT": "465",
+        "SMTP_USER": "",
+        "SMTP_PASS": "",
+        "CONTACT_TO": ""
+      },
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/contact-route.ts",
+          "type": "registry:file",
+          "target": "app/api/contact/route.ts"
+        }
+      ]
+    },
+    {
+      "name": "landing-footer",
+      "type": "registry:block",
+      "title": "Landing: footer",
+      "description": "Footer with brand, contact list, link columns and copyright bar.",
+      "registryDependencies": [
+        "@uiheat/landing-section"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-footer.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-footer.tsx"
+        }
+      ]
+    },
+    {
+      "name": "landing-page",
+      "type": "registry:block",
+      "title": "Landing page",
+      "description": "Every landing block plus the contact API and an example page wiring them together with placeholder copy.",
+      "registryDependencies": [
+        "@uiheat/landing-header",
+        "@uiheat/landing-hero",
+        "@uiheat/landing-how-it-works",
+        "@uiheat/landing-testimonials",
+        "@uiheat/landing-faq",
+        "@uiheat/landing-contact",
+        "@uiheat/landing-footer",
+        "@uiheat/contact-api"
+      ],
+      "files": [
+        {
+          "path": "registry/uiheat/blocks/landing/landing-example.tsx",
+          "type": "registry:component",
+          "target": "components/landing/landing-example.tsx"
+        }
+      ]
     }
   ]
 }

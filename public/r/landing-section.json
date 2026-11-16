@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "landing-section",
+  "title": "Landing: section helpers",
+  "description": "Section wrapper, heading and scroll-reveal used by all landing blocks.",
+  "dependencies": [
+    "framer-motion"
+  ],
+  "files": [
+    {
+      "path": "registry/uiheat/blocks/landing/section.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { motion } from \"framer-motion\";\n\nimport { cn } from \"@/lib/utils\";\n\n/** Page-width section with consistent vertical rhythm. `muted` alternates the background. */\nexport function Section({\n  id,\n  muted,\n  className,\n  containerClassName,\n  children,\n}: {\n  id?: string;\n  muted?: boolean;\n  className?: string;\n  containerClassName?: string;\n  children: React.ReactNode;\n}) {\n  return (\n    <section\n      id={id}\n      className={cn(\"scroll-mt-20 py-20\", muted && \"bg-muted/50\", className)}\n    >\n      <div className={cn(\"mx-auto max-w-6xl px-4 sm:px-6\", containerClassName)}>\n        {children}\n      </div>\n    </section>\n  );\n}\n\n/** Eyebrow + title + description, centered above a section's content. */\nexport function SectionHeading({\n  eyebrow,\n  title,\n  description,\n  className,\n}: {\n  eyebrow?: React.ReactNode;\n  title: React.ReactNode;\n  description?: React.ReactNode;\n  className?: string;\n}) {\n  return (\n    <Reveal className={cn(\"mx-auto mb-12 max-w-2xl text-center\", className)}>\n      {eyebrow && (\n        <p className=\"mb-2 text-sm font-semibold uppercase tracking-wide text-primary\">\n          {eyebrow}\n        </p>\n      )}\n      <h2 className=\"mb-3 text-3xl font-bold tracking-tight sm:text-4xl\">{title}</h2>\n      {description && <p className=\"text-muted-foreground\">{description}</p>}\n    </Reveal>\n  );\n}\n\n/** Fades content up the first time it scrolls into view. */\nexport function Reveal({\n  delay = 0,\n  className,\n  children,\n}: {\n  delay?: number;\n  className?: string;\n  children: React.ReactNode;\n}) {\n  return (\n    <motion.div\n      initial={{ opacity: 0, y: 16 }}\n      whileInView={{ opacity: 1, y: 0 }}\n      viewport={{ once: true, margin: \"-40px\" }}\n      transition={{ duration: 0.45, delay }}\n      className={className}\n    >\n      {children}\n    </motion.div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/landing/section.tsx"
+    },
+    {
+      "path": "registry/uiheat/blocks/landing/types.ts",
+      "content": "import type * as React from \"react\";\n\nexport type NavLink = { label: string; href: string };\n\nexport type Cta = {\n  label: string;\n  href: string;\n  icon?: React.ComponentType<{ className?: string }>;\n};\n",
+      "type": "registry:component",
+      "target": "components/landing/types.ts"
+    }
+  ],
+  "type": "registry:component"
+}

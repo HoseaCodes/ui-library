@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "landing-footer",
+  "title": "Landing: footer",
+  "description": "Footer with brand, contact list, link columns and copyright bar.",
+  "registryDependencies": [
+    "@uiheat/landing-section"
+  ],
+  "files": [
+    {
+      "path": "registry/uiheat/blocks/landing/landing-footer.tsx",
+      "content": "import * as React from \"react\";\n\nimport type { NavLink } from \"@/components/landing/types\";\n\nexport interface FooterContact {\n  icon: React.ComponentType<{ className?: string }>;\n  label: string;\n  href?: string;\n}\n\nexport interface LandingFooterProps {\n  logo?: React.ReactNode;\n  name: string;\n  tagline?: string;\n  description?: string;\n  contacts?: FooterContact[];\n  /** One or more titled link columns. */\n  columns?: { title: string; links: NavLink[] }[];\n  /** Right side of the bottom bar. */\n  note?: React.ReactNode;\n}\n\nexport function LandingFooter({\n  logo,\n  name,\n  tagline,\n  description,\n  contacts = [],\n  columns = [],\n  note,\n}: LandingFooterProps) {\n  return (\n    <footer className=\"border-t bg-muted/40 text-muted-foreground\">\n      <div className=\"mx-auto max-w-6xl px-4 py-12 sm:px-6\">\n        <div className=\"flex flex-col justify-between gap-10 sm:flex-row\">\n          <div className=\"max-w-xs\">\n            <div className=\"mb-3 flex items-center gap-2\">\n              {logo}\n              <span>\n                <span className=\"block text-base font-bold leading-none tracking-tight text-foreground\">\n                  {name}\n                </span>\n                {tagline && <span className=\"text-[10px] leading-none tracking-wide\">{tagline}</span>}\n              </span>\n            </div>\n            {description && <p className=\"text-sm leading-relaxed\">{description}</p>}\n          </div>\n\n          {contacts.length > 0 && (\n            <ul className=\"flex flex-col gap-3 text-sm\">\n              {contacts.map(({ icon: Icon, label, href }) => {\n                const content = (\n                  <>\n                    <Icon className=\"h-4 w-4 text-primary\" />\n                    {label}\n                  </>\n                );\n                return (\n                  <li key={label}>\n                    {href ? (\n                      <a href={href} className=\"flex items-center gap-2.5 transition-colors hover:text-foreground\">\n                        {content}\n                      </a>\n                    ) : (\n                      <span className=\"flex items-center gap-2.5\">{content}</span>\n                    )}\n                  </li>\n                );\n              })}\n            </ul>\n          )}\n\n          {columns.map((col) => (\n            <nav key={col.title} aria-label={col.title} className=\"flex flex-col gap-2.5 text-sm\">\n              <p className=\"mb-0.5 font-medium text-foreground\">{col.title}</p>\n              {col.links.map((link) => (\n                <a key={link.href} href={link.href} className=\"transition-colors hover:text-foreground\">\n                  {link.label}\n                </a>\n              ))}\n            </nav>\n          ))}\n        </div>\n\n        <div className=\"mt-10 flex flex-col justify-between gap-2 border-t pt-6 text-xs sm:flex-row\">\n          <p>\n            &copy; {new Date().getFullYear()} {name}. All rights reserved.\n          </p>\n          {note && <p>{note}</p>}\n        </div>\n      </div>\n    </footer>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/landing/landing-footer.tsx"
+    }
+  ],
+  "type": "registry:block"
+}
